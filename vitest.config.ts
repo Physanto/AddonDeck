@@ -28,6 +28,18 @@ export default defineConfig({
 		},
 	},
 	test: {
+		coverage: {
+			provider: "v8",
+			include: ["packages/*/src/**/*.ts", "apps/*/src/**/*.ts"],
+			exclude: ["**/*.test.ts"],
+			// Everything else builds on these packages, so each one must stay covered
+			// on its own; the rest is judged by behavior, not by percentage.
+			thresholds: {
+				"packages/core/src/**": { lines: 90 },
+				"packages/sdk/src/**": { lines: 90 },
+				"packages/exporter/src/**": { lines: 90 },
+			},
+		},
 		projects: [
 			{
 				extends: true,
