@@ -1,0 +1,27 @@
+{
+	"name": "@addondeck/runtime",
+	"version": "0.0.0",
+	"private": true,
+	"description": "In-browser engine that renders, steps and navigates a deck.",
+	"license": "Apache-2.0",
+	"type": "module",
+	"exports": {
+		".": {
+			"@addondeck/source": "./src/index.ts",
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "tsdown",
+		"dev": "tsdown --watch",
+		"typecheck": "tsc"
+	},
+	"dependencies": {
+		"@addondeck/core": "workspace:*",
+		"@addondeck/sdk": "workspace:*"
+	}
+}

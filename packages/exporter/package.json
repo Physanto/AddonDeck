@@ -1,0 +1,27 @@
+{
+	"name": "@addondeck/exporter",
+	"version": "0.0.0",
+	"private": true,
+	"description": "Builds the single-file HTML export of a deck.",
+	"license": "Apache-2.0",
+	"type": "module",
+	"exports": {
+		".": {
+			"@addondeck/source": "./src/index.ts",
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "tsdown",
+		"dev": "tsdown --watch",
+		"typecheck": "tsc"
+	},
+	"dependencies": {
+		"@addondeck/core": "workspace:*",
+		"@addondeck/assets": "workspace:*"
+	}
+}

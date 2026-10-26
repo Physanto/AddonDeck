@@ -1,0 +1,26 @@
+{
+	"name": "@addondeck/adapters",
+	"version": "0.0.0",
+	"private": true,
+	"description": "SDK implementations backed by third-party libraries.",
+	"license": "Apache-2.0",
+	"type": "module",
+	"exports": {
+		".": {
+			"@addondeck/source": "./src/index.ts",
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "tsdown",
+		"dev": "tsdown --watch",
+		"typecheck": "tsc"
+	},
+	"dependencies": {
+		"@addondeck/sdk": "workspace:*"
+	}
+}
