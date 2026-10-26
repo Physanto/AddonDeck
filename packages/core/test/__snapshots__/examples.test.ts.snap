@@ -1,0 +1,725 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`examples > hello.deck parses without diagnostics 1`] = `
+{
+  "header": [
+    {
+      "key": "format",
+      "keyword": "format",
+      "location": {
+        "column": 1,
+        "line": 1,
+      },
+      "value": "1",
+    },
+    {
+      "key": "title",
+      "keyword": "title",
+      "location": {
+        "column": 1,
+        "line": 2,
+      },
+      "value": "Hello, AddonDeck",
+    },
+  ],
+  "meta": {
+    "accent": null,
+    "author": "",
+    "background": null,
+    "color": null,
+    "font": null,
+    "format": 1,
+    "language": "en",
+    "motion": "smooth",
+    "theme": "paper",
+    "title": "Hello, AddonDeck",
+    "watermark": true,
+  },
+  "sections": [],
+  "slides": [
+    {
+      "content": [
+        {
+          "kind": "text",
+          "lines": [
+            {
+              "line": 4,
+              "raw": "# Hello, AddonDeck",
+              "text": "# Hello, AddonDeck",
+            },
+            {
+              "line": 5,
+              "raw": "Animated slides from plain text.",
+              "text": "Animated slides from plain text.",
+            },
+          ],
+          "location": {
+            "column": 1,
+            "line": 4,
+          },
+        },
+      ],
+      "index": 0,
+      "location": {
+        "column": 1,
+        "line": 4,
+      },
+      "notes": null,
+      "options": {
+        "background": null,
+        "layout": "auto",
+        "transition": "fade",
+      },
+      "section": null,
+    },
+    {
+      "content": [
+        {
+          "kind": "text",
+          "lines": [
+            {
+              "line": 9,
+              "raw": "## How it works",
+              "text": "## How it works",
+            },
+            {
+              "line": 10,
+              "raw": "- Write a short \`.deck\` text, or ask a language model to write it",
+              "text": "- Write a short \`.deck\` text, or ask a language model to write it",
+            },
+            {
+              "line": 11,
+              "raw": "- Export it as a single \`index.html\`",
+              "text": "- Export it as a single \`index.html\`",
+            },
+            {
+              "line": 12,
+              "raw": "- Open it with a double click: no installation, no server",
+              "text": "- Open it with a double click: no installation, no server",
+            },
+          ],
+          "location": {
+            "column": 1,
+            "line": 9,
+          },
+        },
+      ],
+      "index": 1,
+      "location": {
+        "column": 1,
+        "line": 9,
+      },
+      "notes": null,
+      "options": {
+        "background": null,
+        "layout": "auto",
+        "transition": "fade",
+      },
+      "section": null,
+    },
+  ],
+}
+`;
+
+exports[`examples > online-payment.deck parses without diagnostics 1`] = `
+{
+  "header": [
+    {
+      "key": "format",
+      "keyword": "format",
+      "location": {
+        "column": 1,
+        "line": 1,
+      },
+      "value": "1",
+    },
+    {
+      "key": "title",
+      "keyword": "title",
+      "location": {
+        "column": 1,
+        "line": 2,
+      },
+      "value": "How an online payment works",
+    },
+    {
+      "key": "theme",
+      "keyword": "theme",
+      "location": {
+        "column": 1,
+        "line": 3,
+      },
+      "value": "ocean",
+    },
+    {
+      "key": "motion",
+      "keyword": "motion",
+      "location": {
+        "column": 1,
+        "line": 4,
+      },
+      "value": "smooth",
+    },
+    {
+      "key": "watermark",
+      "keyword": "watermark",
+      "location": {
+        "column": 1,
+        "line": 5,
+      },
+      "value": "on",
+    },
+  ],
+  "meta": {
+    "accent": null,
+    "author": "",
+    "background": null,
+    "color": null,
+    "font": null,
+    "format": 1,
+    "language": "en",
+    "motion": "smooth",
+    "theme": "ocean",
+    "title": "How an online payment works",
+    "watermark": true,
+  },
+  "sections": [
+    {
+      "firstSlide": 0,
+      "index": 0,
+      "location": {
+        "column": 1,
+        "line": 7,
+      },
+      "title": "Introduction",
+    },
+    {
+      "firstSlide": 1,
+      "index": 1,
+      "location": {
+        "column": 1,
+        "line": 17,
+      },
+      "title": "The journey of a payment",
+    },
+  ],
+  "slides": [
+    {
+      "content": [
+        {
+          "kind": "text",
+          "lines": [
+            {
+              "line": 9,
+              "raw": "# How an online payment works",
+              "text": "# How an online payment works",
+            },
+            {
+              "line": 10,
+              "raw": "What happens in two seconds when you buy something",
+              "text": "What happens in two seconds when you buy something",
+            },
+          ],
+          "location": {
+            "column": 1,
+            "line": 9,
+          },
+        },
+      ],
+      "index": 0,
+      "location": {
+        "column": 1,
+        "line": 7,
+      },
+      "notes": {
+        "lines": [
+          {
+            "line": 13,
+            "raw": "  Ask who bought something online this week.",
+            "text": "Ask who bought something online this week.",
+          },
+        ],
+        "location": {
+          "column": 1,
+          "line": 12,
+        },
+        "text": "Ask who bought something online this week.",
+      },
+      "options": {
+        "background": null,
+        "layout": "auto",
+        "transition": "fade",
+      },
+      "section": 0,
+    },
+    {
+      "content": [
+        {
+          "kind": "text",
+          "lines": [
+            {
+              "line": 19,
+              "raw": "## The journey of a payment",
+              "text": "## The journey of a payment",
+            },
+          ],
+          "location": {
+            "column": 1,
+            "line": 19,
+          },
+        },
+        {
+          "args": [],
+          "body": [
+            {
+              "line": 22,
+              "raw": "  Customer -> Shop: I want to pay $50",
+              "text": "Customer -> Shop: I want to pay $50",
+            },
+            {
+              "line": 23,
+              "raw": "  Shop -> Bank: Is there enough balance?",
+              "text": "Shop -> Bank: Is there enough balance?",
+            },
+            {
+              "line": 24,
+              "raw": "  Bank --> Shop: Yes",
+              "text": "Bank --> Shop: Yes",
+            },
+            {
+              "line": 25,
+              "raw": "  Shop --> Customer: Payment done!",
+              "text": "Shop --> Customer: Payment done!",
+            },
+          ],
+          "id": "payment",
+          "keyword": "sequence",
+          "kind": "block",
+          "location": {
+            "column": 1,
+            "line": 21,
+          },
+          "model": [
+            "Customer -> Shop: I want to pay $50",
+            "Shop -> Bank: Is there enough balance?",
+            "Bank --> Shop: Yes",
+            "Shop --> Customer: Payment done!",
+          ],
+          "options": [],
+          "type": "sequence",
+        },
+      ],
+      "index": 1,
+      "location": {
+        "column": 1,
+        "line": 17,
+      },
+      "notes": null,
+      "options": {
+        "background": null,
+        "layout": "auto",
+        "transition": "fade",
+      },
+      "section": 1,
+    },
+    {
+      "content": [
+        {
+          "kind": "text",
+          "lines": [
+            {
+              "line": 29,
+              "raw": "## What we learned",
+              "text": "## What we learned",
+            },
+            {
+              "line": 30,
+              "raw": "- The bank always decides",
+              "text": "- The bank always decides",
+            },
+            {
+              "line": 31,
+              "raw": "- It all happens in seconds",
+              "text": "- It all happens in seconds",
+            },
+          ],
+          "location": {
+            "column": 1,
+            "line": 29,
+          },
+        },
+      ],
+      "index": 2,
+      "location": {
+        "column": 1,
+        "line": 29,
+      },
+      "notes": null,
+      "options": {
+        "background": null,
+        "layout": "auto",
+        "transition": "fade",
+      },
+      "section": 1,
+    },
+  ],
+}
+`;
+
+exports[`examples > sections-and-notes.deck parses without diagnostics 1`] = `
+{
+  "header": [
+    {
+      "key": "format",
+      "keyword": "format",
+      "location": {
+        "column": 1,
+        "line": 1,
+      },
+      "value": "1",
+    },
+    {
+      "key": "title",
+      "keyword": "title",
+      "location": {
+        "column": 1,
+        "line": 2,
+      },
+      "value": "Planning the team trip",
+    },
+    {
+      "key": "author",
+      "keyword": "author",
+      "location": {
+        "column": 1,
+        "line": 3,
+      },
+      "value": "The travel committee",
+    },
+    {
+      "key": "theme",
+      "keyword": "theme",
+      "location": {
+        "column": 1,
+        "line": 4,
+      },
+      "value": "chalkboard",
+    },
+    {
+      "key": "motion",
+      "keyword": "motion",
+      "location": {
+        "column": 1,
+        "line": 5,
+      },
+      "value": "elegant",
+    },
+  ],
+  "meta": {
+    "accent": null,
+    "author": "The travel committee",
+    "background": null,
+    "color": null,
+    "font": null,
+    "format": 1,
+    "language": "en",
+    "motion": "elegant",
+    "theme": "chalkboard",
+    "title": "Planning the team trip",
+    "watermark": true,
+  },
+  "sections": [
+    {
+      "firstSlide": 1,
+      "index": 0,
+      "location": {
+        "column": 1,
+        "line": 20,
+      },
+      "title": "Where we go",
+    },
+    {
+      "firstSlide": 3,
+      "index": 1,
+      "location": {
+        "column": 1,
+        "line": 37,
+      },
+      "title": "How we get there",
+    },
+    {
+      "firstSlide": 4,
+      "index": 2,
+      "location": {
+        "column": 1,
+        "line": 52,
+      },
+      "title": "Budget",
+    },
+  ],
+  "slides": [
+    {
+      "content": [
+        {
+          "kind": "text",
+          "lines": [
+            {
+              "line": 11,
+              "raw": "# Planning the team trip",
+              "text": "# Planning the team trip",
+            },
+            {
+              "line": 12,
+              "raw": "Three cities, one week, twelve people",
+              "text": "Three cities, one week, twelve people",
+            },
+          ],
+          "location": {
+            "column": 1,
+            "line": 11,
+          },
+        },
+      ],
+      "index": 0,
+      "location": {
+        "column": 1,
+        "line": 9,
+      },
+      "notes": {
+        "lines": [
+          {
+            "line": 15,
+            "raw": "  Welcome everyone.",
+            "text": "Welcome everyone.",
+          },
+          {
+            "line": 16,
+            "raw": "  The budget is on the last slide.",
+            "text": "The budget is on the last slide.",
+          },
+        ],
+        "location": {
+          "column": 1,
+          "line": 14,
+        },
+        "text": "Welcome everyone.
+The budget is on the last slide.",
+      },
+      "options": {
+        "background": null,
+        "layout": "columns",
+        "transition": "zoom",
+      },
+      "section": null,
+    },
+    {
+      "content": [
+        {
+          "kind": "text",
+          "lines": [
+            {
+              "line": 22,
+              "raw": "## Three cities",
+              "text": "## Three cities",
+            },
+            {
+              "line": 23,
+              "raw": "- Lisbon",
+              "text": "- Lisbon",
+            },
+            {
+              "line": 24,
+              "raw": "- Porto",
+              "text": "- Porto",
+            },
+            {
+              "line": 25,
+              "raw": "- Coimbra",
+              "text": "- Coimbra",
+            },
+          ],
+          "location": {
+            "column": 1,
+            "line": 22,
+          },
+        },
+      ],
+      "index": 1,
+      "location": {
+        "column": 1,
+        "line": 20,
+      },
+      "notes": {
+        "lines": [
+          {
+            "line": 28,
+            "raw": "  Ask who has been to any of them.",
+            "text": "Ask who has been to any of them.",
+          },
+        ],
+        "location": {
+          "column": 1,
+          "line": 27,
+        },
+        "text": "Ask who has been to any of them.",
+      },
+      "options": {
+        "background": null,
+        "layout": "auto",
+        "transition": "fade",
+      },
+      "section": 0,
+    },
+    {
+      "content": [
+        {
+          "kind": "text",
+          "lines": [
+            {
+              "line": 32,
+              "raw": "## Why these three",
+              "text": "## Why these three",
+            },
+            {
+              "line": 33,
+              "raw": "They are connected by train, so nobody has to drive.",
+              "text": "They are connected by train, so nobody has to drive.",
+            },
+          ],
+          "location": {
+            "column": 1,
+            "line": 32,
+          },
+        },
+      ],
+      "index": 2,
+      "location": {
+        "column": 1,
+        "line": 32,
+      },
+      "notes": null,
+      "options": {
+        "background": null,
+        "layout": "auto",
+        "transition": "fade",
+      },
+      "section": 0,
+    },
+    {
+      "content": [
+        {
+          "kind": "text",
+          "lines": [
+            {
+              "line": 41,
+              "raw": "## By train",
+              "text": "## By train",
+            },
+            {
+              "line": 42,
+              "raw": "1. Lisbon to Coimbra: 1 h 40 min",
+              "text": "1. Lisbon to Coimbra: 1 h 40 min",
+            },
+            {
+              "line": 43,
+              "raw": "2. Coimbra to Porto: 1 h",
+              "text": "2. Coimbra to Porto: 1 h",
+            },
+          ],
+          "location": {
+            "column": 1,
+            "line": 41,
+          },
+        },
+      ],
+      "index": 3,
+      "location": {
+        "column": 1,
+        "line": 37,
+      },
+      "notes": {
+        "lines": [
+          {
+            "line": 46,
+            "raw": "  Tickets are cheaper two weeks in advance.",
+            "text": "Tickets are cheaper two weeks in advance.",
+          },
+          {
+            "line": 47,
+            "raw": "",
+            "text": "",
+          },
+          {
+            "line": 48,
+            "raw": "  Mention the bike carriages.",
+            "text": "Mention the bike carriages.",
+          },
+        ],
+        "location": {
+          "column": 1,
+          "line": 45,
+        },
+        "text": "Tickets are cheaper two weeks in advance.
+
+Mention the bike carriages.",
+      },
+      "options": {
+        "background": "night",
+        "layout": "auto",
+        "transition": "fade",
+      },
+      "section": 1,
+    },
+    {
+      "content": [
+        {
+          "kind": "text",
+          "lines": [
+            {
+              "line": 54,
+              "raw": "## What it costs",
+              "text": "## What it costs",
+            },
+            {
+              "line": 55,
+              "raw": "| Item | Per person |",
+              "text": "| Item | Per person |",
+            },
+            {
+              "line": 56,
+              "raw": "|---|---|",
+              "text": "|---|---|",
+            },
+            {
+              "line": 57,
+              "raw": "| Train | 60 € |",
+              "text": "| Train | 60 € |",
+            },
+            {
+              "line": 58,
+              "raw": "| Hotels | 420 € |",
+              "text": "| Hotels | 420 € |",
+            },
+          ],
+          "location": {
+            "column": 1,
+            "line": 54,
+          },
+        },
+      ],
+      "index": 4,
+      "location": {
+        "column": 1,
+        "line": 52,
+      },
+      "notes": null,
+      "options": {
+        "background": null,
+        "layout": "auto",
+        "transition": "fade",
+      },
+      "section": 2,
+    },
+  ],
+}
+`;
