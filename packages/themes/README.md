@@ -6,4 +6,6 @@ Theme data (design tokens and CSS), motion personalities and presets by subject 
 
 > Status: skeleton. The package is private until its first release.
 
+How this package fits with the others: [contributor map](../../docs/README.md).
+
 Licensed under the [Apache License 2.0](../../LICENSE).
