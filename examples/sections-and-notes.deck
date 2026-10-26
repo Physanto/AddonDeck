@@ -1,0 +1,58 @@
+format: 1
+title: Planning the team trip
+author: The travel committee
+theme: chalkboard
+motion: elegant
+
+// The agenda and the progress bar are built from the sections below.
+
+slide: layout=columns transition=zoom
+
+# Planning the team trip
+Three cities, one week, twelve people
+
+notes:
+  Welcome everyone.
+  The budget is on the last slide.
+
+---
+
+section: Where we go
+
+## Three cities
+- Lisbon
+- Porto
+- Coimbra
+
+notes:
+  Ask who has been to any of them.
+
+---
+
+## Why these three
+They are connected by train, so nobody has to drive.
+
+---
+
+section: How we get there
+
+slide: background=night transition=fade
+
+## By train
+1. Lisbon to Coimbra: 1 h 40 min
+2. Coimbra to Porto: 1 h
+
+notes:
+  Tickets are cheaper two weeks in advance.
+
+  Mention the bike carriages.
+
+---
+
+section: Budget
+
+## What it costs
+| Item | Per person |
+|---|---|
+| Train | 60 € |
+| Hotels | 420 € |

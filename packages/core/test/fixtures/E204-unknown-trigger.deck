@@ -1,0 +1,6 @@
+format: 1
+
+- The request leaves the browser    @1 → network-call
+
+sequence id=network:
+  Browser -> Server: GET /

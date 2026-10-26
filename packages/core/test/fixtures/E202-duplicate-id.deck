@@ -1,0 +1,9 @@
+format: 1
+
+sequence id=flow:
+  A -> B: first
+
+---
+
+sequence id=flow:
+  A -> B: second

@@ -268,7 +268,11 @@ importers:
         specifier: workspace:*
         version: link:../core
 
-  tooling: {}
+  tooling:
+    devDependencies:
+      '@addondeck/core':
+        specifier: workspace:*
+        version: link:../packages/core
 
 packages:
 

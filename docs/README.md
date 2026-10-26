@@ -26,6 +26,8 @@ The text can come from three places, and the engine treats them the same way:
 
 When someone opens the exported file, the runtime reads the embedded deck text, applies the theme, mounts the blocks of the current slide and plays their steps as the presenter moves forward or back.
 
+The text format is specified in [docs/format/v1.md](format/v1.md): what each line means, the defaults, and every diagnostic code.
+
 ## Design principles
 
 These settle most discussions. A change that breaks one needs a [decision record](adr/).
@@ -43,18 +45,18 @@ These settle most discussions. A change that breaks one needs a [decision record
 
 ## Repository layout
 
-| Path                        | Contents                                                                                    |
-| --------------------------- | ------------------------------------------------------------------------------------------- |
-| `packages/`                 | The libraries that make up the engine (table below)                                         |
-| `apps/studio/`              | The web app: forms, editor, live preview and export                                         |
-| `apps/cli/`                 | The `addondeck` command line tool                                                           |
-| `tooling/`                  | Checks for the repository itself, such as the dependency rule tests and the changeset check |
-| [`docs/adr/`](adr/)         | Architecture decision records                                                               |
-| [`licenses/`](../licenses/) | Full license texts of third-party components                                                |
-| `docs/format/`              | _(planned)_ Specification of the `.deck` format                                             |
-| `docs/guides/`              | _(planned)_ How to create a block, a verb, a theme or a translation                         |
-| `examples/`                 | _(planned)_ Example decks, which double as a gallery and as tests                           |
-| `ai/`                       | _(planned)_ Instructions and evals for using AddonDeck with language models                 |
+| Path                           | Contents                                                                                    |
+| ------------------------------ | ------------------------------------------------------------------------------------------- |
+| `packages/`                    | The libraries that make up the engine (table below)                                         |
+| `apps/studio/`                 | The web app: forms, editor, live preview and export                                         |
+| `apps/cli/`                    | The `addondeck` command line tool                                                           |
+| `tooling/`                     | Checks for the repository itself, such as the dependency rule tests and the changeset check |
+| [`docs/adr/`](adr/)            | Architecture decision records                                                               |
+| [`licenses/`](../licenses/)    | Full license texts of third-party components                                                |
+| [`docs/format/`](format/v1.md) | Specification of the `.deck` format, the source of truth for the parser                     |
+| `docs/guides/`                 | _(planned)_ How to create a block, a verb, a theme or a translation                         |
+| [`examples/`](../examples/)    | Example decks, which double as a gallery and as tests                                       |
+| `ai/`                          | _(planned)_ Instructions and evals for using AddonDeck with language models                 |
 
 ## Packages
 

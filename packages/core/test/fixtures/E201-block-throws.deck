@@ -1,0 +1,6 @@
+format: 1
+
+# A block that fails while reading its body
+
+explode:
+  boom
