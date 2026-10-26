@@ -1,0 +1,31 @@
+format: 1
+title: How an online payment works
+theme: ocean
+motion: smooth
+watermark: on
+
+section: Introduction
+
+# How an online payment works
+What happens in two seconds when you buy something
+
+notes:
+  Ask who bought something online this week.
+
+---
+
+section: The journey of a payment
+
+## The journey of a payment
+
+sequence id=payment:
+  Customer -> Shop: I want to pay $50
+  Shop -> Bank: Is there enough balance?
+  Bank --> Shop: Yes
+  Shop --> Customer: Payment done!
+
+---
+
+## What we learned
+- The bank always decides
+- It all happens in seconds

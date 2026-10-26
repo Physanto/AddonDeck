@@ -1,0 +1,12 @@
+format: 1
+title: Hello, AddonDeck
+
+# Hello, AddonDeck
+Animated slides from plain text.
+
+---
+
+## How it works
+- Write a short `.deck` text, or ask a language model to write it
+- Export it as a single `index.html`
+- Open it with a double click: no installation, no server
