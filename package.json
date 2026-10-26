@@ -11,6 +11,7 @@
 		"dev": "pnpm --recursive --parallel --if-present run dev",
 		"build": "pnpm --recursive --if-present run build",
 		"test": "vitest run",
+		"test:coverage": "vitest run --coverage",
 		"check": "biome check && pnpm --recursive --if-present run typecheck && depcruise packages apps",
 		"format": "biome check --write"
 	},
@@ -19,6 +20,7 @@
 		"@changesets/changelog-github": "^1.0.1",
 		"@changesets/cli": "^3.0.3",
 		"@types/node": "^24.19.2",
+		"@vitest/coverage-v8": "^5.0.5",
 		"dependency-cruiser": "^18.7.0",
 		"tsdown": "^0.23.2",
 		"typescript": "6.0.3",

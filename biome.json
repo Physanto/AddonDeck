@@ -7,7 +7,7 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"includes": ["**", "!pnpm-lock.yaml"]
+		"includes": ["**", "!pnpm-lock.yaml", "!CODE_OF_CONDUCT.md"]
 	},
 	"formatter": {
 		"enabled": true,
