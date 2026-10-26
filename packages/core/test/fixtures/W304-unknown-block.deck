@@ -1,0 +1,4 @@
+format: 1
+
+secuence id=pay:
+  Customer -> Shop: I want to pay
