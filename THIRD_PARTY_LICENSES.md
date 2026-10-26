@@ -31,6 +31,7 @@ Direct development dependencies of the repository. Their own dependencies are no
 | [Changesets](https://github.com/changesets/changesets) (`@changesets/cli`) | 3.0.3   | Versioning and changelog                         | MIT               | [changesets-cli.txt](licenses/changesets-cli.txt)                                              |
 | [@changesets/changelog-github](https://github.com/changesets/changesets)   | 1.0.1   | Changelog with pull request link and author      | MIT               | [changesets-changelog-github.txt](licenses/changesets-changelog-github.txt)                    |
 | [@types/node](https://github.com/DefinitelyTyped/DefinitelyTyped)          | 24.19.2 | Node.js type definitions                         | MIT               | [types-node.txt](licenses/types-node.txt)                                                      |
+| [fast-check](https://github.com/dubzzz/fast-check)                         | 4.10.2  | Property-based tests (`@addondeck/core`)         | MIT               | [fast-check.txt](licenses/fast-check.txt)                                                      |
 
 ## Adding a component
 
