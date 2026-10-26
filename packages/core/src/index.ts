@@ -1,6 +1,11 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright 2026 The AddonDeck Authors
 
+export {
+	type ExtractStepAnnotationsOptions,
+	extractStepAnnotations,
+	type StepAnnotationResult,
+} from "./annotations/extract-step-annotations";
 export type { AdapterKind } from "./contracts/adapter-kind";
 export type { BlockDefinition } from "./contracts/block-definition";
 export type { BlockOption } from "./contracts/block-option";
@@ -58,3 +63,20 @@ export type { SourceLocation } from "./model/source-location";
 export type { SpeakerNotes } from "./model/speaker-notes";
 export type { StepAnnotation } from "./model/step-annotation";
 export type { TextNode } from "./model/text-node";
+export { parse } from "./parser/parse";
+export type {
+	InstalledResources,
+	ParseOptions,
+	ParseOutput,
+} from "./parser/parse-options";
+export type { BlockRegistry } from "./registry/block-registry";
+export {
+	type CreateBlockRegistryOptions,
+	createBlockRegistry,
+} from "./registry/create-block-registry";
+export type { LanguagePack } from "./registry/language-pack";
+export {
+	closestKeyword,
+	MAX_SUGGESTION_DISTANCE,
+} from "./text/closest-keyword";
+export { normalizeKeyword } from "./text/normalize-keyword";

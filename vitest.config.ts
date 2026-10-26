@@ -43,7 +43,13 @@ export default defineConfig({
 		projects: [
 			{
 				extends: true,
-				test: { name: "packages", include: ["packages/*/src/**/*.test.ts"] },
+				test: {
+					name: "packages",
+					include: [
+						"packages/*/src/**/*.test.ts",
+						"packages/*/test/**/*.test.ts",
+					],
+				},
 			},
 			{
 				extends: true,

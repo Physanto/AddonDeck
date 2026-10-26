@@ -18,6 +18,9 @@
 	"scripts": {
 		"build": "tsdown",
 		"dev": "tsdown --watch",
-		"typecheck": "tsc"
+		"typecheck": "tsc && tsc -p test"
+	},
+	"devDependencies": {
+		"fast-check": "^4.10.2"
 	}
 }
