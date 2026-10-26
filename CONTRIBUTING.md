@@ -87,16 +87,16 @@ If you have never written tests, open the PR anyway and ask for help in it: we'l
 
 Tests use [Vitest](https://vitest.dev/) and live next to the code they test, as `*.test.ts` files.
 
-| If you change…                                                      | Required tests                                                                           |
-| ------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| Pure logic (parser, exporter, algorithms, utilities)                | Unit                                                                                     |
-| A block or a verb                                                   | The SDK contract suite, unit tests for its `parse`, and at least one example _(planned)_ |
-| Several pieces working together (exporter + CLI, Studio + exporter) | Integration                                                                              |
-| The runtime, navigation, or anything visible while presenting       | End-to-end, including the double-click test _(planned)_                                  |
-| Themes or styles                                                    | Visual snapshots _(planned)_                                                             |
-| A bug                                                               | A test that fails without your fix and passes with it                                    |
-| The parser                                                          | The new case and, for a new error, its code and its message in the text catalog          |
-| Documentation only                                                  | None                                                                                     |
+| If you change…                                                      | Required tests                                                                                                                                    |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Pure logic (parser, exporter, algorithms, utilities)                | Unit                                                                                                                                              |
+| A block or a verb                                                   | The SDK contract suite, unit tests for its `parse`, and at least one example deck                                                                 |
+| Several pieces working together (exporter + CLI, Studio + exporter) | Integration                                                                                                                                       |
+| The runtime, navigation, or anything visible while presenting       | End-to-end, including the double-click test _(planned)_                                                                                           |
+| Themes or styles                                                    | Visual snapshots _(planned)_                                                                                                                      |
+| A bug                                                               | A test that fails without your fix and passes with it                                                                                             |
+| The parser                                                          | The new case and, for a new diagnostic, its code in the [format specification](docs/format/v1.md#diagnostics) and its message in the text catalog |
+| Documentation only                                                  | None                                                                                                                                              |
 
 **Coverage:** `core`, `sdk` and `exporter` must each keep at least 90% of lines covered, and CI enforces it (`pnpm test:coverage`), because everything else depends on them. Other packages have no minimum: we prefer a few tests that check real behavior over many that only raise the percentage.
 
