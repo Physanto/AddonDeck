@@ -1,0 +1,50 @@
+name: New block
+description: Propose a new kind of block (a piece of content that can be animated in steps).
+labels: [enhancement, new block]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A block is one type of slide content, such as a list, a table or a sequence diagram.
+        Describe what it shows and how it animates; the format and implementation can be agreed on here.
+  - type: input
+    id: name
+    attributes:
+      label: Block name
+      description: A short English name, used as its keyword in the `.deck` format.
+      placeholder: matrix
+    validations:
+      required: true
+  - type: textarea
+    id: purpose
+    attributes:
+      label: What would it show?
+      description: What it is for and who would use it. Links to examples or sketches are welcome.
+    validations:
+      required: true
+  - type: textarea
+    id: syntax
+    attributes:
+      label: Proposed text
+      description: How a person or a language model would write it in a `.deck` file.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps
+      description: What changes at each step of the slide, and how going back works.
+    validations:
+      required: true
+  - type: textarea
+    id: libraries
+    attributes:
+      label: Libraries
+      description: Any third-party library it would need, with its license.
+  - type: checkboxes
+    id: contribute
+    attributes:
+      label: Contribution
+      options:
+        - label: I would like to build this block.

@@ -1,0 +1,60 @@
+name: Bug report
+description: Something doesn't work as expected.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting this. Please search the existing issues first, in case it is already known.
+        Security problems must not be reported here: use the private security report instead.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Describe the problem and what you expected to happen instead.
+    validations:
+      required: true
+  - type: textarea
+    id: deck
+    attributes:
+      label: Deck text
+      description: The smallest `.deck` text that reproduces the problem, if it applies.
+      render: text
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Export the deck above.
+        2. Open index.html with a double click.
+        3. Press the right arrow twice.
+    validations:
+      required: true
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where does it happen?
+      multiple: true
+      options:
+        - Exported presentation (index.html)
+        - Studio
+        - Command line
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: The AddonDeck version, or the commit if you built it yourself.
+  - type: input
+    id: environment
+    attributes:
+      label: Browser and operating system
+      placeholder: Firefox 140 on Windows 11
+  - type: textarea
+    id: logs
+    attributes:
+      label: Errors or diagnostics
+      description: Messages from the browser console, the command line or the Studio.
+      render: text

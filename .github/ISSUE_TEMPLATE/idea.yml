@@ -1,0 +1,31 @@
+name: Idea
+description: Suggest an improvement or a new feature.
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: For big changes, agreeing on the approach here first saves everyone time.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does it solve?
+      description: Who runs into it and when. A real example helps a lot.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: How you imagine it working. If it changes the `.deck` format, show the text you would write.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+  - type: checkboxes
+    id: contribute
+    attributes:
+      label: Contribution
+      options:
+        - label: I would like to work on this.
