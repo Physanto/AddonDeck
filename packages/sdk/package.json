@@ -10,6 +10,11 @@
 			"@addondeck/source": "./src/index.ts",
 			"types": "./dist/index.d.ts",
 			"default": "./dist/index.js"
+		},
+		"./testing": {
+			"@addondeck/source": "./src/testing/index.ts",
+			"types": "./dist/testing/index.d.ts",
+			"default": "./dist/testing/index.js"
 		}
 	},
 	"files": [
