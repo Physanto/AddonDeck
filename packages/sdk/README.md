@@ -72,16 +72,25 @@ The runtime decides which steps play in each click from the slide's step plan (d
 const { animator, motion } = ctx;
 
 // Transforms: x, y, rotate and scale combine into one `transform`.
-await animator.animate(card, { opacity: [0, 1], y: [20, 0] }, { easing: motion.easing.enter }).finished;
+await animator.animate(
+	card,
+	{ opacity: [0, 1], y: [20, 0] },
+	{ easing: motion.easing.enter },
+).finished;
 
 // Staggered items.
-animator.animate(items, { opacity: [0, 1] }, { delay: stagger(motion.stagger) });
+animator.animate(
+	items,
+	{ opacity: [0, 1] },
+	{ delay: stagger(motion.stagger) },
+);
 
 // An SVG stroke drawn from its start, and a packet that travels along it.
 await animator
 	.timeline()
 	.add(wire, { draw: [0, 1] }, { duration: motion.duration.m })
-	.add(packet, { opacity: [0, 1] }, { path: { element: wire, rotate: true } }).finished;
+	.add(packet, { opacity: [0, 1] }, { path: { element: wire, rotate: true } })
+	.finished;
 ```
 
 Durations and easings left out come from the motion personality. Every `Animation` can `play`, `pause`, `seek`, `finish` and `cancel`, reports its `progress`, and its `finished` promise settles in every case, never rejecting.
