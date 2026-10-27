@@ -100,7 +100,9 @@ export default {
 	],
 	options: {
 		doNotFollow: { path: "node_modules" },
-		exclude: { path: "(^|/)(dist/|tsdown\\.config\\.ts$)" },
+		// Only the build output of the workspace: libraries in node_modules also
+		// ship from a dist/ folder, and excluding them hides their imports.
+		exclude: { path: "^(packages|apps)/[^/]+/(dist/|tsdown\\.config\\.ts$)" },
 		tsPreCompilationDeps: true,
 		tsConfig: { fileName: "tsconfig.base.json" },
 		enhancedResolveOptions: {
