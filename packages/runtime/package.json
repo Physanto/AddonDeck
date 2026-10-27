@@ -23,5 +23,8 @@
 	"dependencies": {
 		"@addondeck/core": "workspace:*",
 		"@addondeck/sdk": "workspace:*"
+	},
+	"devDependencies": {
+		"happy-dom": "^20.14.6"
 	}
 }

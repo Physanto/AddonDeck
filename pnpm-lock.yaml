@@ -266,6 +266,10 @@ importers:
       '@addondeck/sdk':
         specifier: workspace:*
         version: link:../sdk
+    devDependencies:
+      happy-dom:
+        specifier: ^20.14.6
+        version: 20.14.6
 
   packages/sdk:
     dependencies:
