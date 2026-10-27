@@ -63,6 +63,14 @@ export type { BlockInstance } from "./block/block-instance";
 export type { BlockView } from "./block/block-view";
 export type { Box } from "./block/box";
 export type {
+	AdapterEnvironment,
+	AdapterPlugin,
+	AdapterPluginOf,
+	AdapterServices,
+	BlockPlugin,
+	Plugin,
+} from "./plugin/plugin";
+export type {
 	ActorHandle,
 	ParamSchema,
 	SceneContext,
