@@ -76,6 +76,11 @@ export {
 } from "./registry/create-block-registry";
 export type { LanguagePack } from "./registry/language-pack";
 export {
+	type CompileStepPlanOptions,
+	compileStepPlan,
+} from "./steps/compile-step-plan";
+export type { StepAdvance, StepClick, StepPlan } from "./steps/step-plan";
+export {
 	closestKeyword,
 	MAX_SUGGESTION_DISTANCE,
 } from "./text/closest-keyword";

@@ -1,0 +1,5 @@
+format: 1
+
+reveal:
+  The request arrives    @2
+  The request is sent    @1

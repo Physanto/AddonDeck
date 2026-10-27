@@ -10,6 +10,11 @@
 			"@addondeck/source": "./src/index.ts",
 			"types": "./dist/index.d.ts",
 			"default": "./dist/index.js"
+		},
+		"./testing": {
+			"@addondeck/source": "./src/testing/index.ts",
+			"types": "./dist/testing/index.d.ts",
+			"default": "./dist/testing/index.js"
 		}
 	},
 	"files": [
@@ -22,5 +27,16 @@
 	},
 	"dependencies": {
 		"@addondeck/core": "workspace:*"
+	},
+	"peerDependencies": {
+		"vitest": "^5.0.5"
+	},
+	"peerDependenciesMeta": {
+		"vitest": {
+			"optional": true
+		}
+	},
+	"devDependencies": {
+		"happy-dom": "^20.14.6"
 	}
 }

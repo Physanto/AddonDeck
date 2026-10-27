@@ -1,0 +1,7 @@
+format: 1
+
+reveal:
+  The request leaves the browser    → network-call
+
+sequence id=network:
+  Browser -> Server: GET /

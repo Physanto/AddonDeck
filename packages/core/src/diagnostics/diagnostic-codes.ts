@@ -28,6 +28,7 @@ export const DIAGNOSTIC_CODES = {
 	W312: { severity: "warning", params: [] },
 	W313: { severity: "warning", params: [] },
 	W314: { severity: "warning", params: ["word"] },
+	W315: { severity: "warning", params: [] },
 	I401: { severity: "info", params: ["supported"] },
 	I402: { severity: "info", params: [] },
 	I403: { severity: "info", params: ["keyword"] },

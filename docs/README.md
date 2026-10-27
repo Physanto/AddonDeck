@@ -62,18 +62,18 @@ These settle most discussions. A change that breaks one needs a [decision record
 
 Each package has one responsibility. The "Must never" column is what keeps the system easy to extend.
 
-| Package        | Responsibility                                                                                     | May import                    | Must never                                       |
-| -------------- | -------------------------------------------------------------------------------------------------- | ----------------------------- | ------------------------------------------------ |
-| `core`         | Turn `.deck` text into a `Deck` plus diagnostics; keyword aliases and property schemas             | —                             | Touch the DOM or know any concrete block         |
-| `sdk`          | Contracts for plugins (`BlockPlugin`, `VerbPlugin`, `BlockContext`, `Animator`…) and small helpers | `core`                        | Contain heavy implementations                    |
-| `runtime`      | Render slides, run steps, navigation, themes and presenter mode in the browser                     | `core`, `sdk`                 | Import a concrete block or library               |
-| `adapters`     | Implement SDK interfaces with real libraries (animation, physics, charts, highlighting)            | `sdk`                         | Contain presentation logic                       |
-| `blocks`       | One folder per block: read its text, draw itself, animate its steps, document itself               | `core`, `sdk`                 | Import another block or a library directly       |
-| `themes`       | Theme data and CSS, motion personalities and presets by subject                                    | `core`                        | Contain logic                                    |
-| `assets`       | Catalog of emojis, icons, fonts and backgrounds, with licenses and resolvers                       | `core`                        | —                                                |
-| `exporter`     | Analyze a deck, gather what it uses and embed it in one HTML file (or a zip)                       | `core`, `assets`              | Depend on the DOM or on the file system directly |
-| `studio` (app) | Web interface                                                                                      | `core`, `exporter`, `runtime` | Reimplement parsing or rendering                 |
-| `cli` (app)    | Terminal interface                                                                                 | `core`, `exporter`            | Reimplement parsing or rendering                 |
+| Package        | Responsibility                                                                                   | May import                    | Must never                                       |
+| -------------- | ------------------------------------------------------------------------------------------------ | ----------------------------- | ------------------------------------------------ |
+| `core`         | Turn `.deck` text into a `Deck` plus diagnostics; keyword aliases and property schemas           | —                             | Touch the DOM or know any concrete block         |
+| `sdk`          | Contracts for plugins (`BlockDefinition`, `BlockView`, `BlockContext`, `Animator`…) and test kit | `core`                        | Contain heavy implementations                    |
+| `runtime`      | Render slides, run steps, navigation, themes and presenter mode in the browser                   | `core`, `sdk`                 | Import a concrete block or library               |
+| `adapters`     | Implement SDK interfaces with real libraries (animation, physics, charts, highlighting)          | `sdk`                         | Contain presentation logic                       |
+| `blocks`       | One folder per block: read its text, draw itself, animate its steps, document itself             | `core`, `sdk`                 | Import another block or a library directly       |
+| `themes`       | Theme data and CSS, motion personalities and presets by subject                                  | `core`                        | Contain logic                                    |
+| `assets`       | Catalog of emojis, icons, fonts and backgrounds, with licenses and resolvers                     | `core`                        | —                                                |
+| `exporter`     | Analyze a deck, gather what it uses and embed it in one HTML file (or a zip)                     | `core`, `assets`              | Depend on the DOM or on the file system directly |
+| `studio` (app) | Web interface                                                                                    | `core`, `exporter`, `runtime` | Reimplement parsing or rendering                 |
+| `cli` (app)    | Terminal interface                                                                               | `core`, `exporter`            | Reimplement parsing or rendering                 |
 
 ## The dependency rule
 
@@ -116,7 +116,7 @@ packages/blocks/src/sequence/
 └── sequence.test.ts
 ```
 
-Every block will pass the same contract suite from `sdk`: `parse` never throws, `setState(n)` is idempotent and matches the result of animating to step `n`, going back works, and `destroy()` leaves nothing behind. To propose one, open a "New block" issue.
+Every block passes the same contract suite, `runBlockContract` from `@addondeck/sdk/testing`: `parse` never throws, `setState(n)` is idempotent and matches the result of animating to step `n`, going back works, `destroy()` leaves nothing behind, and the docs and examples are valid. The [SDK readme](../packages/sdk/README.md) lists every rule. To propose a block, open a "New block" issue.
 
 ## Adding a theme _(planned)_
 
