@@ -21,6 +21,10 @@
 		"typecheck": "tsc"
 	},
 	"dependencies": {
-		"@addondeck/sdk": "workspace:*"
+		"@addondeck/sdk": "workspace:*",
+		"animejs": "^4.5.0"
+	},
+	"devDependencies": {
+		"happy-dom": "^20.14.6"
 	}
 }

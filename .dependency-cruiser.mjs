@@ -61,6 +61,14 @@ export default {
 			to: { path: "node_modules" },
 		},
 		{
+			name: "only-adapters-import-animejs",
+			comment:
+				"anime.js is reached through the Animator of the sdk, so the library can be replaced by changing one adapter (ADR 003).",
+			severity: "error",
+			from: { pathNot: "^packages/adapters/" },
+			to: { path: "node_modules/(\\.pnpm/)?animejs[@/]" },
+		},
+		{
 			name: "no-node-builtins",
 			comment:
 				"core and exporter also run in the browser (core inside the runtime, exporter inside the studio).",

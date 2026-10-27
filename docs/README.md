@@ -95,6 +95,7 @@ Dependencies always point inward, toward `core` and `sdk`. `core` depends on not
 
 - a block importing another block;
 - `runtime` or `blocks` importing an npm library (they go through `adapters`);
+- any package other than `adapters` importing anime.js, which everything else reaches through the `Animator` of the SDK;
 - `core` or `exporter` importing Node.js built-ins, since both also run in the browser;
 - circular imports and imports of packages not declared in `package.json`.
 
