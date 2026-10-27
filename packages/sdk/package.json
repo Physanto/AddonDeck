@@ -22,5 +22,16 @@
 	},
 	"dependencies": {
 		"@addondeck/core": "workspace:*"
+	},
+	"peerDependencies": {
+		"vitest": "^5.0.5"
+	},
+	"peerDependenciesMeta": {
+		"vitest": {
+			"optional": true
+		}
+	},
+	"devDependencies": {
+		"happy-dom": "^20.14.6"
 	}
 }

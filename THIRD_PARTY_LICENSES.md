@@ -32,6 +32,7 @@ Direct development dependencies of the repository. Their own dependencies are no
 | [@changesets/changelog-github](https://github.com/changesets/changesets)   | 1.0.1   | Changelog with pull request link and author      | MIT               | [changesets-changelog-github.txt](licenses/changesets-changelog-github.txt)                    |
 | [@types/node](https://github.com/DefinitelyTyped/DefinitelyTyped)          | 24.19.2 | Node.js type definitions                         | MIT               | [types-node.txt](licenses/types-node.txt)                                                      |
 | [fast-check](https://github.com/dubzzz/fast-check)                         | 4.10.2  | Property-based tests (`@addondeck/core`)         | MIT               | [fast-check.txt](licenses/fast-check.txt)                                                      |
+| [happy-dom](https://github.com/capricorn86/happy-dom)                      | 20.14.6 | DOM for tests (`@addondeck/sdk`)                 | MIT               | [happy-dom.txt](licenses/happy-dom.txt)                                                        |
 
 ## Adding a component
 
