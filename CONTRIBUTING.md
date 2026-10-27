@@ -47,6 +47,7 @@ pnpm check           # lint, formatting, types and dependency rules
 pnpm format          # fix formatting and safe lint issues
 pnpm build           # build every package
 pnpm dev             # rebuild packages on every change
+pnpm --filter @addondeck/runtime dev:page   # show the example decks in the browser
 ```
 
 Packages import each other straight from their sources, so tests and type checks don't need a build first.

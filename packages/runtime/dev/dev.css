@@ -1,0 +1,23 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* Copyright 2026 The AddonDeck Authors */
+
+/* Theme variables for the development page, until the runtime applies themes. */
+:root {
+	--color-bg: #fbfaf7;
+	--color-surface: #2b2a27;
+	--color-text: #1c1b19;
+	--color-muted: #6b675f;
+	--color-bad: #c0392b;
+	--font-body: system-ui, sans-serif;
+	--font-code: ui-monospace, monospace;
+	--radius: 12px;
+}
+
+.deck-picker {
+	position: fixed;
+	top: 8px;
+	right: 8px;
+	z-index: 1;
+	font-family: system-ui, sans-serif;
+	font-size: 14px;
+}

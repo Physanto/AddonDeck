@@ -35,6 +35,7 @@ Direct development dependencies of the repository. Their own dependencies are no
 | [@types/node](https://github.com/DefinitelyTyped/DefinitelyTyped)          | 24.19.2 | Node.js type definitions                                                      | MIT               | [types-node.txt](licenses/types-node.txt)                                                      |
 | [fast-check](https://github.com/dubzzz/fast-check)                         | 4.10.2  | Property-based tests (`@addondeck/core`)                                      | MIT               | [fast-check.txt](licenses/fast-check.txt)                                                      |
 | [happy-dom](https://github.com/capricorn86/happy-dom)                      | 20.14.6 | DOM for tests (`@addondeck/sdk`, `@addondeck/adapters`, `@addondeck/runtime`) | MIT               | [happy-dom.txt](licenses/happy-dom.txt)                                                        |
+| [Vite](https://github.com/vitejs/vite)                                     | 8.3.5   | Development page of `@addondeck/runtime`                                      | MIT               | [vite.txt](licenses/vite.txt)                                                                  |
 
 ## Adding a component
 

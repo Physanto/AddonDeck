@@ -23,13 +23,15 @@
 	"scripts": {
 		"build": "tsdown",
 		"dev": "tsdown --watch",
-		"typecheck": "tsc && tsc -p test"
+		"dev:page": "vite --config dev/vite.config.ts",
+		"typecheck": "tsc && tsc -p dev && tsc -p test"
 	},
 	"dependencies": {
 		"@addondeck/core": "workspace:*",
 		"@addondeck/sdk": "workspace:*"
 	},
 	"devDependencies": {
-		"happy-dom": "^20.14.6"
+		"happy-dom": "^20.14.6",
+		"vite": "^8.3.5"
 	}
 }
