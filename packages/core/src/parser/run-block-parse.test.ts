@@ -17,13 +17,16 @@ const SOURCE: BlockSource = {
 	location: { line: 4, column: 1 },
 };
 
-function probe(parse: () => unknown): BlockDefinition {
+function probe(
+	parse: () => unknown,
+	steps: () => unknown = () => [],
+): BlockDefinition {
 	return {
 		type: "probe",
 		aliases: [],
 		version: "1.0.0",
 		parse: parse as BlockDefinition["parse"],
-		steps: () => [],
+		steps: steps as BlockDefinition["steps"],
 	};
 }
 
@@ -86,5 +89,26 @@ describe("runBlockParse", () => {
 			),
 		).toBeNull();
 		expect(reporter.diagnostics).toEqual([]);
+	});
+
+	it.each([
+		[
+			"throws",
+			() => {
+				throw new Error("no steps");
+			},
+		],
+		["returns something that is not a list", () => 3],
+	])("turns a model whose steps %s into E201", (_, steps) => {
+		const reporter = createReporter(undefined);
+		const model = runBlockParse(
+			probe(() => ({ model: 1, diagnostics: [] }), steps),
+			SOURCE,
+			reporter,
+		);
+		expect(model).toBeNull();
+		expect(reporter.diagnostics).toMatchObject([
+			{ code: "E201", line: 4, params: { type: "probe" } },
+		]);
 	});
 });

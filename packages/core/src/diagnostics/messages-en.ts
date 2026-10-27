@@ -25,6 +25,7 @@ export const EN_DIAGNOSTIC_MESSAGES: DiagnosticMessages = {
 	W312: "This line is indented less than the rest of the block.",
 	W313: '"notes:" has no indented text below it.',
 	W314: '"{word}" has no value. Slide options are written as key=value, so it is ignored.',
+	W315: "This step would play before an earlier step of its block, so it plays together with that step.",
 	I401: 'There is no "format:" line, so format {supported} is assumed.',
 	I402: "This slide has no content, so it is skipped.",
 	I403: '"{keyword}:" is followed by text, so the line is shown as text. To start a block, put its content on the next lines, indented.',
