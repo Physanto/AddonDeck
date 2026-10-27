@@ -3,16 +3,8 @@
 
 import type { BlockDefinition } from "../contracts/block-definition";
 import type { BlockSource } from "../contracts/block-source";
+import { describeError } from "../diagnostics/describe-error";
 import type { Reporter } from "./reporter";
-
-function describeError(error: unknown): string {
-	try {
-		if (error instanceof Error) return error.message || error.name;
-		return String(error);
-	} catch {
-		return typeof error;
-	}
-}
 
 /**
  * Hands a block's source to its definition and returns the model.

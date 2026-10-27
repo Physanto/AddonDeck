@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright 2026 The AddonDeck Authors
 
-import type { Diagnostic } from "../diagnostics/diagnostic";
+import { sortByPosition } from "../diagnostics/sort-by-position";
 import type { Section } from "../model/section";
 import type { Slide } from "../model/slide";
 import { isBlank } from "../text/indentation";
@@ -110,12 +110,4 @@ function toSlide(scanned: ScannedSlide, index: number, section: number): Slide {
  */
 function isSilentlyEmpty(slide: RawSlide): boolean {
 	return slide.edge && slide.lines.every((line) => isBlank(line.raw));
-}
-
-function sortByPosition(
-	diagnostics: readonly Diagnostic[],
-): readonly Diagnostic[] {
-	return [...diagnostics].sort(
-		(a, b) => a.line - b.line || a.column - b.column,
-	);
 }
