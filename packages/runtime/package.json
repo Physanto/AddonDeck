@@ -10,6 +10,11 @@
 			"@addondeck/source": "./src/index.ts",
 			"types": "./dist/index.d.ts",
 			"default": "./dist/index.js"
+		},
+		"./browser": "./dist/browser.iife.js",
+		"./runtime.css": {
+			"@addondeck/source": "./src/runtime.css",
+			"default": "./dist/runtime.css"
 		}
 	},
 	"files": [

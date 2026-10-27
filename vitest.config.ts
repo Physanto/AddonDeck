@@ -37,6 +37,7 @@ export default defineConfig({
 			thresholds: {
 				"packages/core/src/**": { lines: 90 },
 				"packages/sdk/src/**": { lines: 90 },
+				"packages/runtime/src/**": { lines: 90 },
 				"packages/exporter/src/**": { lines: 90 },
 			},
 		},
