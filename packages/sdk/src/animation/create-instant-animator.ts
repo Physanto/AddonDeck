@@ -2,36 +2,23 @@
 // Copyright 2026 The AddonDeck Authors
 
 import type { Animation } from "./animation";
+import type { AnimationOptions } from "./animation-options";
 import type {
 	AnimationProps,
 	AnimationTarget,
 	AnimationValue,
 } from "./animation-props";
 import type { Animator } from "./animator";
+import {
+	readTransform,
+	TRANSFORM_KEYS,
+	type TransformKey,
+	writeTransform,
+} from "./inline-transform";
+import { pathEnd } from "./path-end";
+import { setStrokeDraw } from "./stroke-draw";
 import type { Timeline } from "./timeline";
-
-type TransformKey = "x" | "y" | "scale" | "rotate";
-
-const TRANSFORM_KEYS: ReadonlySet<string> = new Set<TransformKey>([
-	"x",
-	"y",
-	"scale",
-	"rotate",
-]);
-
-const UNITLESS: ReadonlySet<string> = new Set([
-	"opacity",
-	"zIndex",
-	"fontWeight",
-	"lineHeight",
-	"flex",
-	"flexGrow",
-	"flexShrink",
-	"order",
-	"scale",
-]);
-
-type Transform = Partial<Record<TransformKey, string>>;
+import { toCssValue } from "./to-css-value";
 
 interface Styled extends Element {
 	readonly style: CSSStyleDeclaration;
@@ -43,23 +30,6 @@ function isStyled(element: Element): element is Styled {
 
 function kebabCase(property: string): string {
 	return property.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
-}
-
-function withUnit(key: string, value: number | string): string {
-	if (typeof value === "string") return value;
-	if (key === "rotate") return `${value}deg`;
-	if (UNITLESS.has(key) || key.startsWith("--")) return String(value);
-	return `${value}px`;
-}
-
-function composeTransform(transform: Transform): string {
-	const parts: string[] = [];
-	if (transform.x !== undefined || transform.y !== undefined) {
-		parts.push(`translate(${transform.x ?? "0px"}, ${transform.y ?? "0px"})`);
-	}
-	if (transform.scale !== undefined) parts.push(`scale(${transform.scale})`);
-	if (transform.rotate !== undefined) parts.push(`rotate(${transform.rotate})`);
-	return parts.join(" ");
 }
 
 function finalValue(value: AnimationValue): number | string {
@@ -74,9 +44,61 @@ function targetsOf(targets: AnimationTarget): readonly Element[] {
 	return isList(targets) ? targets : [targets];
 }
 
+/** The final transform values of each shorthand, with the path in place of `x`, `y` and maybe `rotate`. */
+function finalTransform(
+	element: Element,
+	props: AnimationProps,
+	options: AnimationOptions | undefined,
+): Partial<Record<TransformKey, string>> {
+	const values: Partial<Record<TransformKey, string>> = {};
+	for (const [key, value] of Object.entries(props)) {
+		if (TRANSFORM_KEYS.has(key)) {
+			values[key as TransformKey] = toCssValue(key, finalValue(value));
+		}
+	}
+	const path = options?.path;
+	if (path) {
+		const end = pathEnd(path.element, element);
+		values.x = toCssValue("x", end.x);
+		values.y = toCssValue("y", end.y);
+		if (path.rotate) values.rotate = toCssValue("rotate", end.angle);
+	}
+	return values;
+}
+
+function apply(
+	targets: AnimationTarget,
+	props: AnimationProps,
+	options: AnimationOptions | undefined,
+): void {
+	for (const element of targetsOf(targets)) {
+		if (!isStyled(element)) continue;
+		for (const [key, value] of Object.entries(props)) {
+			if (TRANSFORM_KEYS.has(key)) continue;
+			if (key === "draw") {
+				setStrokeDraw(element, Number(finalValue(value)));
+				continue;
+			}
+			element.style.setProperty(
+				key.startsWith("--") ? key : kebabCase(key),
+				toCssValue(key, finalValue(value)),
+			);
+		}
+		const values = finalTransform(element, props, options);
+		if (Object.keys(values).length > 0) {
+			const current = readTransform(element.style.transform);
+			element.style.transform = writeTransform({
+				values: { ...current.values, ...values },
+				others: current.others,
+			});
+		}
+	}
+}
+
 function settled(): Animation {
 	return {
 		duration: 0,
+		progress: 1,
 		finished: Promise.resolve(),
 		play: () => {},
 		pause: () => {},
@@ -90,7 +112,9 @@ function settled(): Animation {
  * Creates an animator that applies the final values at once, without any library.
  *
  * Every animation is already finished when it is returned. It produces the
- * same styles an animated adapter leaves at the end, so it serves to jump to a
+ * same styles an animated adapter leaves at the end, and it reads the
+ * `transform` already written instead of remembering its own, so it can take
+ * turns with an animated adapter on the same elements. It serves to jump to a
  * step, to show decks with reduced motion and to run block tests.
  *
  * @returns An animator whose animations take no time.
@@ -104,42 +128,16 @@ function settled(): Animation {
  * ```
  */
 export function createInstantAnimator(): Animator {
-	const transforms = new WeakMap<Element, Transform>();
-
-	const apply = (targets: AnimationTarget, props: AnimationProps): void => {
-		for (const element of targetsOf(targets)) {
-			if (!isStyled(element)) continue;
-			const transform = { ...transforms.get(element) };
-			let transformed = false;
-			for (const [key, value] of Object.entries(props)) {
-				const final = withUnit(key, finalValue(value));
-				if (TRANSFORM_KEYS.has(key)) {
-					transform[key as TransformKey] = final;
-					transformed = true;
-				} else {
-					element.style.setProperty(
-						key.startsWith("--") ? key : kebabCase(key),
-						final,
-					);
-				}
-			}
-			if (transformed) {
-				transforms.set(element, transform);
-				element.style.transform = composeTransform(transform);
-			}
-		}
-	};
-
 	return {
-		animate(targets, props) {
-			apply(targets, props);
+		animate(targets, props, options) {
+			apply(targets, props, options);
 			return settled();
 		},
 		timeline() {
 			const timeline: Timeline = {
 				...settled(),
-				add(targets, props) {
-					apply(targets, props);
+				add(targets, props, options) {
+					apply(targets, props, options);
 					return timeline;
 				},
 			};

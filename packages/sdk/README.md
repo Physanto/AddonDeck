@@ -64,7 +64,29 @@ The runtime decides which steps play in each click from the slide's step plan (d
 
 `PhysicsWorld`, `ChartRenderer`, `Highlighter` and `VerbPlugin` are marked `@experimental`: they will be settled together with their adapters and the scene block.
 
-`createInstantAnimator()` implements `Animator` without a library, applying final values at once; `stagger()` builds staggered delays.
+## Animating
+
+`ctx.animator` animates CSS properties in camelCase, custom properties and a few shorthands:
+
+```ts
+const { animator, motion } = ctx;
+
+// Transforms: x, y, rotate and scale combine into one `transform`.
+await animator.animate(card, { opacity: [0, 1], y: [20, 0] }, { easing: motion.easing.enter }).finished;
+
+// Staggered items.
+animator.animate(items, { opacity: [0, 1] }, { delay: stagger(motion.stagger) });
+
+// An SVG stroke drawn from its start, and a packet that travels along it.
+await animator
+	.timeline()
+	.add(wire, { draw: [0, 1] }, { duration: motion.duration.m })
+	.add(packet, { opacity: [0, 1] }, { path: { element: wire, rotate: true } }).finished;
+```
+
+Durations and easings left out come from the motion personality. Every `Animation` can `play`, `pause`, `seek`, `finish` and `cancel`, reports its `progress`, and its `finished` promise settles in every case, never rejecting.
+
+`createInstantAnimator()` implements `Animator` without a library, applying final values at once: the runtime uses it for `setState`, for reduced motion and in tests. It leaves the same styles an animated adapter leaves at the end and reads the `transform` already written, so both can work on the same elements. `toCssValue()` holds the default units both share, and `getStrokeDraw()` and `setStrokeDraw()` the representation of `draw`.
 
 ## Testing a block
 

@@ -20,13 +20,19 @@ export type AnimationValue =
  * Properties to animate.
  *
  * Keys are CSS properties in camelCase (`opacity`, `backgroundColor`), CSS
- * custom properties (`--progress`) and the transform shorthands `x`, `y`,
- * `scale` and `rotate`, which combine into one `transform` and keep the
- * values of the shorthands an earlier animation set.
+ * custom properties (`--progress`) and two kinds of shorthands:
+ *
+ * - `x`, `y`, `scale` and `rotate` combine into one `transform`, written in
+ *   that order (translate, rotate, scale) and keeping the values that earlier
+ *   animations set. Other transform functions already written are kept.
+ * - `draw` is the part of an SVG stroke that is drawn, from its start: `0`
+ *   hides the line and `1` shows all of it. It takes over the
+ *   `stroke-dasharray` of the element; elements that are not SVG shapes ignore it.
  *
  * @example
  * ```ts
  * const props: AnimationProps = { opacity: [0, 1], x: 40, backgroundColor: "var(--color-accent)" };
+ * const reveal: AnimationProps = { draw: [0, 1] };
  * ```
  */
 export type AnimationProps = Readonly<Record<string, AnimationValue>>;
