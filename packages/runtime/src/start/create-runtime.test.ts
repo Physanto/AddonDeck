@@ -20,7 +20,11 @@ import {
 	DEFAULT_MOTION_TOKENS,
 	DEFAULT_THEME_TOKENS,
 } from "../theme/default-tokens";
-import { createRuntime, type Runtime } from "./create-runtime";
+import {
+	createRuntime,
+	type Runtime,
+	type RuntimeOptions,
+} from "./create-runtime";
 
 let runtime: Runtime | null = null;
 
@@ -37,7 +41,7 @@ afterEach(() => {
 function start(
 	source: string,
 	plugins: readonly Plugin[] = [],
-	extra: { assets?: Map<string, never> } = {},
+	extra: Partial<Omit<RuntimeOptions, "root" | "source" | "registry">> = {},
 ) {
 	const registry = createPluginRegistry();
 	for (const plugin of plugins) registry.register(plugin);
@@ -173,7 +177,14 @@ describe("createRuntime", () => {
 			theme: DEFAULT_THEME_TOKENS,
 			motion: DEFAULT_MOTION_TOKENS,
 		});
-		expect(contexts[0]?.animator).toBe(animator);
+		const animate = vi.spyOn(animator, "animate");
+		const target = document.createElement("div");
+		contexts[0]?.animator.animate(target, { opacity: [0, 1] });
+		expect(animate).toHaveBeenCalledWith(
+			target,
+			{ opacity: [0, 1] },
+			undefined,
+		);
 	});
 
 	it("gives blocks an animator without motion when none is registered", () => {
@@ -215,5 +226,97 @@ describe("createRuntime", () => {
 		expect(log).toEqual(["mount:a", "mount:b", "destroy:a", "destroy:b"]);
 		press("ArrowRight");
 		expect(runtime.navigator.position).toEqual({ slide: 0, step: 0 });
+	});
+
+	it("emits the lifecycle events of slides and clicks, in order", () => {
+		const { runtime } = start("box:\n  a\n\n---\n\n# Two", [createBoxPlugin()]);
+		const events: string[] = [];
+		const record = (name: "slide:enter" | "slide:leave" | "step:change") =>
+			runtime.events.on(name, (payload) =>
+				events.push(`${name} ${JSON.stringify(payload)}`),
+			);
+		record("slide:enter");
+		record("slide:leave");
+		record("step:change");
+		runtime.navigator.next();
+		runtime.navigator.next();
+		expect(events).toEqual([
+			'step:change {"slide":0,"step":1}',
+			'slide:leave {"slide":0}',
+			'slide:enter {"slide":1}',
+			'step:change {"slide":1,"step":0}',
+		]);
+	});
+
+	it("tells the blocks of the first slide that it entered", () => {
+		const entered = vi.fn();
+		const box = createBoxPlugin();
+		const listener: BlockPlugin<BoxModel> = {
+			...box,
+			view: {
+				type: "box",
+				mount(model, el, ctx) {
+					ctx.events.on("slide:enter", entered);
+					return box.view.mount(model, el, ctx);
+				},
+			},
+		};
+		start("box:\n  a", [listener]);
+		expect(entered).toHaveBeenCalledExactlyOnceWith({ slide: 0 });
+	});
+
+	it("plays the clicks of the current slide on its blocks", () => {
+		const log: BoxLog = [];
+		const { runtime } = start("box:\n  a\n  b", [
+			createBoxPlugin(log, { logSteps: true }),
+		]);
+		runtime.navigator.next();
+		expect(log).toEqual(["mount:a", "set:a:0", "play:a:0-1"]);
+	});
+
+	it("writes the deck's theme as CSS variables on the viewport", () => {
+		const { runtime } = start("color: #0a7\n\n# One");
+		const { viewport } = runtime.stage;
+		expect(viewport.style.getPropertyValue("--color-primary")).toBe("#0a7");
+		expect(viewport.style.getPropertyValue("--adk-duration-m")).toBe("600ms");
+		expect(runtime.theme.theme.colors.primary).toBe("#0a7");
+	});
+
+	it("shows every problem on its slide in a preview", () => {
+		const { root } = start(
+			"watermark: maybe\n\n# One\n\n---\n\nslide: transition=spin\n\n# Two",
+		);
+		const cards = root.querySelectorAll(".adk-error-card");
+		expect(cards).toHaveLength(2);
+		expect(
+			root.querySelector(".adk-slide[data-index='0'] .adk-error-card li")
+				?.textContent,
+		).toContain("Line 1, column");
+	});
+
+	it("shows only errors when asked to", () => {
+		const { root } = start("watermark: maybe\n\n# One", [], {
+			problems: "errors",
+		});
+		expect(root.querySelector(".adk-error-card")).toBeNull();
+	});
+
+	it("shows the watermark unless the deck turns it off", () => {
+		const shown = start("# One");
+		expect(
+			shown.root.querySelector(".adk-stage > .adk-watermark")?.textContent,
+		).toBe("Made with AddonDeck");
+		runtime?.destroy();
+		const hidden = start("watermark: off\n\n# One");
+		expect(hidden.root.querySelector(".adk-watermark")).toBeNull();
+	});
+
+	it("words the watermark from the active language", () => {
+		const { root } = start("# One", [], {
+			messages: { watermark: "Hecho con AddonDeck" },
+		});
+		expect(root.querySelector(".adk-watermark")?.textContent).toBe(
+			"Hecho con AddonDeck",
+		);
 	});
 });

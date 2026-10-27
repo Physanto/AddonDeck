@@ -8,13 +8,9 @@ import {
 	type PartialDiagnosticMessages,
 	parse,
 } from "@addondeck/core";
-import {
-	type BlockContext,
-	createInstantAnimator,
-	type ResolvedAsset,
-	type Unsubscribe,
-} from "@addondeck/sdk";
+import type { EventBus, ResolvedAsset, Unsubscribe } from "@addondeck/sdk";
 import type { EmbeddedAssets } from "../assets/read-embedded-assets";
+import { createDeckContext } from "../context/create-deck-context";
 import { createEventBus } from "../context/create-event-bus";
 import {
 	type IssueReporter,
@@ -37,11 +33,19 @@ import type { NavigationActions } from "../navigation/navigation-actions";
 import { toggleFullscreen } from "../navigation/toggle-fullscreen";
 import type { PluginRegistry } from "../registry/plugin-registry";
 import { createSlideRenderer } from "../slides/create-slide-renderer";
+import { slideAtLine } from "../slides/slide-at-line";
 import { createStage, type Stage } from "../stage/create-stage";
+import { mountWatermark } from "../stage/mount-watermark";
 import {
-	DEFAULT_MOTION_TOKENS,
-	DEFAULT_THEME_TOKENS,
-} from "../theme/default-tokens";
+	createThemeEngine,
+	type ThemeEngine,
+} from "../theme/create-theme-engine";
+
+/**
+ * Which problems are shown on the slides: every warning and error, as in a
+ * preview, or only errors, as in an exported deck.
+ */
+export type ProblemDisplay = "all" | "errors";
 
 /** What {@link createRuntime} needs to show a deck. */
 export interface RuntimeOptions {
@@ -59,6 +63,8 @@ export interface RuntimeOptions {
 	readonly diagnosticMessages?: PartialDiagnosticMessages;
 	/** Receives each problem once; by default they go to the console. */
 	readonly report?: IssueReporter;
+	/** Which problems of the deck text are shown on their slides; `all` by default. */
+	readonly problems?: ProblemDisplay;
 }
 
 /** A deck being shown. */
@@ -68,6 +74,9 @@ export interface Runtime {
 	readonly diagnostics: readonly Diagnostic[];
 	readonly navigator: Navigator;
 	readonly stage: Stage;
+	readonly theme: ThemeEngine;
+	/** The bus blocks share; the runtime emits `slide:enter`, `slide:leave` and `step:change` on it. */
+	readonly events: EventBus;
 	/** Removes the deck from the page and stops listening to input. */
 	destroy(): void;
 }
@@ -104,9 +113,32 @@ function toIssue(diagnostic: Diagnostic, translate: Translate): RuntimeIssue {
 	};
 }
 
+/** The problems each slide shows, from the diagnostics of the deck text. */
+function slideProblems(
+	deck: Deck,
+	diagnostics: readonly Diagnostic[],
+	display: ProblemDisplay,
+	translate: Translate,
+): Map<number, RuntimeIssue[]> {
+	const problems = new Map<number, RuntimeIssue[]>();
+	for (const diagnostic of diagnostics) {
+		if (diagnostic.severity === "info") continue;
+		if (display === "errors" && diagnostic.severity !== "error") continue;
+		const slide = slideAtLine(deck, diagnostic.line);
+		const list = problems.get(slide) ?? [];
+		list.push(toIssue(diagnostic, translate));
+		problems.set(slide, list);
+	}
+	return problems;
+}
+
 /**
  * Parses a deck and shows it inside `root`, ready to navigate with the
  * keyboard, clicks, swipes and the address hash.
+ *
+ * The deck gets its theme and motion personality, each click plays on its
+ * blocks, the problems of the deck text show on their slides and, unless the
+ * deck turns it off, the watermark sits in a corner.
  *
  * @example
  * ```ts
@@ -130,46 +162,57 @@ export function createRuntime(options: RuntimeOptions): Runtime {
 	});
 	const { deck } = parsed;
 	const diagnostics = [...parsed.diagnostics];
-	const clickCounts = deck.slides.map((slide) => {
+	const plans = deck.slides.map((slide) => {
 		const plan = compileStepPlan(slide, blocks, {
 			messages: options.diagnosticMessages,
 		});
 		diagnostics.push(...plan.diagnostics);
-		return plan.clicks.length;
+		return plan.clicks;
 	});
+	const problems = slideProblems(
+		deck,
+		diagnostics,
+		options.problems ?? "all",
+		translate,
+	);
 	for (const diagnostic of diagnostics) {
 		if (diagnostic.severity !== "info") report(toIssue(diagnostic, translate));
 	}
 
 	const stage = createStage(root);
-	const theme = DEFAULT_THEME_TOKENS;
-	const motion = DEFAULT_MOTION_TOKENS;
+	const theme = createThemeEngine({
+		element: stage.viewport,
+		meta: deck.meta,
+	});
 	const assets = options.assets ?? new Map<string, ResolvedAsset>();
-	const context: BlockContext = {
-		animator:
-			registry.adapter("animator")?.create({ theme, motion }) ??
-			createInstantAnimator(),
+	const events = createEventBus();
+	const shared = createDeckContext({
+		registry,
 		theme,
-		motion,
 		assets: { resolve: (reference) => assets.get(reference) ?? null },
-		events: createEventBus(),
+		events,
 		stage: stage.info,
-	};
+	});
 	const renderer = createSlideRenderer({
 		deck,
+		plans,
 		stage: stage.element,
 		label: (slide) =>
 			translate("slideLabel", {
 				number: slide.index + 1,
 				total: deck.slides.length,
 			}),
+		problems,
 		registry,
-		context,
+		context: shared.context,
 		translate,
 		report,
 	});
+	if (deck.meta.watermark) {
+		mountWatermark(stage.element, translate("watermark"));
+	}
 
-	const navigator = createNavigator(clickCounts);
+	const navigator = createNavigator(plans.map((clicks) => clicks.length));
 	const actions: NavigationActions = {
 		next: () => navigator.next(),
 		prev: () => navigator.prev(),
@@ -180,10 +223,21 @@ export function createRuntime(options: RuntimeOptions): Runtime {
 	const bindings: Unsubscribe[] = [];
 	// The hash may open another slide, so it is read before the first one is drawn.
 	if (window !== null) bindings.push(bindHash(window, navigator));
-	renderer.show(navigator.position.slide);
+	renderer.show(navigator.position.slide, navigator.position.step);
+	events.emit("slide:enter", { slide: navigator.position.slide });
 	bindings.push(
 		navigator.subscribe((position, previous) => {
-			if (position.slide !== previous.slide) renderer.show(position.slide);
+			if (position.slide === previous.slide) {
+				renderer.goToStep(position.step);
+			} else {
+				events.emit("slide:leave", { slide: previous.slide });
+				renderer.show(position.slide, position.step);
+				events.emit("slide:enter", { slide: position.slide });
+			}
+			events.emit("step:change", {
+				slide: position.slide,
+				step: position.step,
+			});
 		}),
 		bindKeyboard(document, actions),
 		bindPointer(stage.viewport, actions),
@@ -194,9 +248,13 @@ export function createRuntime(options: RuntimeOptions): Runtime {
 		diagnostics,
 		navigator,
 		stage,
+		theme,
+		events,
 		destroy() {
 			for (const unbind of bindings) unbind();
 			renderer.destroy();
+			shared.destroy();
+			theme.destroy();
 			stage.destroy();
 		},
 	};

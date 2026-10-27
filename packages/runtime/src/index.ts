@@ -40,6 +40,7 @@ export {
 } from "./stage/fit-stage";
 export {
 	createRuntime,
+	type ProblemDisplay,
 	type Runtime,
 	type RuntimeOptions,
 } from "./start/create-runtime";

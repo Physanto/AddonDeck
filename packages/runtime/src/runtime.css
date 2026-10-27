@@ -3,7 +3,9 @@
 
 /*
  * Base styles of the runtime. Colors, fonts and radius come from the theme
- * variables; spacing is in stage pixels, since the stage is always 1920×1080.
+ * variables and durations and curves from the motion ones, both written by
+ * the theme engine; spacing is in stage pixels, since the stage is always
+ * 1920×1080.
  */
 
 .adk-viewport {
@@ -38,8 +40,48 @@
 	padding: var(--adk-slide-padding);
 }
 
+/*
+ * Transitions: the stage carries the one of the move in progress, and the
+ * neighbors wait hidden, past to the left and future to the right, so going
+ * back plays it in reverse. Visibility switches at the start of the move for
+ * the slide that enters and at the end for the one that leaves.
+ */
+.adk-slide {
+	transition-property: opacity, transform, visibility;
+	transition-duration: var(--adk-duration-m);
+	transition-timing-function: var(--adk-easing-move);
+}
+
 .adk-slide:not([data-state="current"]) {
 	visibility: hidden;
+}
+
+.adk-stage[data-transition="none"] .adk-slide {
+	transition: none;
+}
+
+.adk-stage[data-transition="fade"] .adk-slide:not([data-state="current"]) {
+	opacity: 0;
+}
+
+.adk-stage[data-transition="slide"] .adk-slide[data-state="past"] {
+	transform: translateX(-100%);
+}
+
+.adk-stage[data-transition="slide"] .adk-slide[data-state="future"] {
+	transform: translateX(100%);
+}
+
+.adk-stage[data-transition="zoom"] .adk-slide:not([data-state="current"]) {
+	opacity: 0;
+}
+
+.adk-stage[data-transition="zoom"] .adk-slide[data-state="past"] {
+	transform: scale(1.2);
+}
+
+.adk-stage[data-transition="zoom"] .adk-slide[data-state="future"] {
+	transform: scale(0.8);
 }
 
 .adk-slide-header {
@@ -99,4 +141,50 @@
 .adk-placeholder-message {
 	margin: 16px 0 0;
 	color: var(--color-bad);
+}
+
+/* Problems of the deck text, over the top right corner of their slide. */
+.adk-error-card {
+	position: absolute;
+	top: 24px;
+	right: 24px;
+	z-index: 1;
+	box-sizing: border-box;
+	max-width: 50%;
+	max-height: calc(100% - 48px);
+	overflow: auto;
+	padding: 16px 24px;
+	border: 2px solid var(--color-bad);
+	border-radius: var(--radius);
+	background: var(--color-surface);
+	color: var(--color-text);
+	font-size: 24px;
+}
+
+.adk-error-card summary {
+	cursor: pointer;
+	color: var(--color-bad);
+	font-weight: bold;
+}
+
+.adk-error-card ul {
+	margin: 12px 0 0;
+	padding-left: 24px;
+}
+
+.adk-error-card li[data-severity="warning"] {
+	color: var(--color-muted);
+}
+
+/* Inside the slide padding, where no block draws. */
+.adk-watermark {
+	position: absolute;
+	right: 32px;
+	bottom: 28px;
+	z-index: 1;
+	pointer-events: none;
+	color: var(--color-muted);
+	font-family: var(--font-body);
+	font-size: 20px;
+	opacity: 0.7;
 }

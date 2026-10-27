@@ -17,6 +17,10 @@ export const EN_RUNTIME_MESSAGES: RuntimeMessages = {
 	missingAdapter:
 		'Line {line}: the {type} block needs the "{adapter}" adapter, which is not registered.',
 	blockFailed: "Line {line}: the {type} block could not be drawn ({reason}).",
+	stepFailed:
+		"Line {line}: the {type} block could not show its step {step} ({reason}).",
 	diagnostic: "Line {line}, column {column}: {message}",
 	slideLabel: "Slide {number} of {total}",
+	problemsTitle: "Problems on this slide: {count}",
+	watermark: "Made with AddonDeck",
 };
