@@ -10,6 +10,11 @@
 			"@addondeck/source": "./src/index.ts",
 			"types": "./dist/index.d.ts",
 			"default": "./dist/index.js"
+		},
+		"./animator-anime": {
+			"@addondeck/source": "./src/animator-anime/index.ts",
+			"types": "./dist/animator-anime/index.d.ts",
+			"default": "./dist/animator-anime/index.js"
 		}
 	},
 	"files": [

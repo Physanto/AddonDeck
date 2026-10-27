@@ -4,6 +4,7 @@
 import { defineConfig } from "tsdown";
 
 export default defineConfig({
+	entry: ["src/index.ts", "src/animator-anime/index.ts"],
 	platform: "browser",
 	target: "es2022",
 	fixedExtension: false,
