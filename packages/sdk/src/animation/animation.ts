@@ -10,6 +10,8 @@
 export interface Animation {
 	/** Total length in milliseconds, delays included. */
 	readonly duration: number;
+	/** How far it has played, from 0 (not started) to 1 (ended), delays included. */
+	readonly progress: number;
 	/** Resolves when the animation ends, is finished or is cancelled. Never rejects. */
 	readonly finished: Promise<void>;
 	/** Resumes a paused animation. */

@@ -220,6 +220,13 @@ importers:
       '@addondeck/sdk':
         specifier: workspace:*
         version: link:../sdk
+      animejs:
+        specifier: ^4.5.0
+        version: 4.5.0
+    devDependencies:
+      happy-dom:
+        specifier: ^20.14.6
+        version: 20.14.6
 
   packages/assets:
     dependencies:
@@ -723,6 +730,17 @@ packages:
     resolution: {integrity: sha512-oJlA3XiRm7Cyk6qFD2Jn8ak9B7jSy0qy00ADO3+8dpT0LSjFihQYv4C02LFCSYJV3Q37xYwwRy5m+IpIiUzqWw==}
     engines: {node: '>=0.4.0'}
     hasBin: true
+
+  animejs@4.5.0:
+    resolution: {integrity: sha512-NQimYX+lz8WaXonGS9zVVoviCIAjONeJayxacUditaivYLqyXgGjFKjuyl0aUUhFKm5MriX9ty1TGovNzoJQWA==}
+    peerDependencies:
+      '@types/three': '>=0.150.0'
+      three: '>=0.150.0'
+    peerDependenciesMeta:
+      '@types/three':
+        optional: true
+      three:
+        optional: true
 
   ansi-styles@4.3.0:
     resolution: {integrity: sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg==}
@@ -1694,6 +1712,8 @@ snapshots:
       acorn: 8.19.0
 
   acorn@8.19.0: {}
+
+  animejs@4.5.0: {}
 
   ansi-styles@4.3.0:
     dependencies:

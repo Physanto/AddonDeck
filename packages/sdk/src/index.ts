@@ -53,8 +53,11 @@ export type {
 export type { Animator } from "./animation/animator";
 export { createInstantAnimator } from "./animation/create-instant-animator";
 export { EASINGS, type Easing } from "./animation/easing";
+export type { MotionPath } from "./animation/motion-path";
 export { type StaggerFrom, stagger } from "./animation/stagger";
+export { getStrokeDraw, setStrokeDraw } from "./animation/stroke-draw";
 export type { Timeline } from "./animation/timeline";
+export { toCssValue } from "./animation/to-css-value";
 export type { BlockContext } from "./block/block-context";
 export type { BlockInstance } from "./block/block-instance";
 export type { BlockView } from "./block/block-view";

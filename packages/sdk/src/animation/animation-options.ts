@@ -3,6 +3,7 @@
 
 import type { DelayFunction } from "./animation-props";
 import type { Easing } from "./easing";
+import type { MotionPath } from "./motion-path";
 
 /** How an animation runs. Missing values come from the deck's motion tokens. */
 export interface AnimationOptions {
@@ -12,6 +13,12 @@ export interface AnimationOptions {
 	readonly delay?: number | DelayFunction;
 	/** Curve of the movement; usually one of `ctx.motion.easing`. */
 	readonly easing?: Easing;
+	/**
+	 * Moves the targets along an SVG path, from its start to its end. It takes
+	 * the place of the `x` and `y` shorthands, and of `rotate` when the path
+	 * turns the targets.
+	 */
+	readonly path?: MotionPath;
 }
 
 /** How a step of a timeline runs, and when it starts. */

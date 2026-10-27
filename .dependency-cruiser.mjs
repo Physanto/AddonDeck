@@ -61,6 +61,14 @@ export default {
 			to: { path: "node_modules" },
 		},
 		{
+			name: "only-adapters-import-animejs",
+			comment:
+				"anime.js is reached through the Animator of the sdk, so the library can be replaced by changing one adapter (ADR 003).",
+			severity: "error",
+			from: { pathNot: "^packages/adapters/" },
+			to: { path: "node_modules/(\\.pnpm/)?animejs[@/]" },
+		},
+		{
 			name: "no-node-builtins",
 			comment:
 				"core and exporter also run in the browser (core inside the runtime, exporter inside the studio).",
@@ -100,7 +108,9 @@ export default {
 	],
 	options: {
 		doNotFollow: { path: "node_modules" },
-		exclude: { path: "(^|/)(dist/|tsdown\\.config\\.ts$)" },
+		// Only the build output of the workspace: libraries in node_modules also
+		// ship from a dist/ folder, and excluding them hides their imports.
+		exclude: { path: "^(packages|apps)/[^/]+/(dist/|tsdown\\.config\\.ts$)" },
 		tsPreCompilationDeps: true,
 		tsConfig: { fileName: "tsconfig.base.json" },
 		enhancedResolveOptions: {
