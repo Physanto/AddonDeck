@@ -49,6 +49,13 @@ export {
 	startFromPage,
 } from "./start/start-from-page";
 export {
+	createStepTimeline,
+	type StepTimeline,
+	type StepTimelineOptions,
+	type TimelineBlock,
+} from "./steps/create-step-timeline";
+export { stepStates } from "./steps/step-states";
+export {
 	createThemeEngine,
 	REDUCED_MOTION_QUERY,
 	type ThemeEngine,
