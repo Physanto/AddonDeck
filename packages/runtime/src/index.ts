@@ -7,10 +7,6 @@ export {
 	readEmbeddedAssets,
 } from "./assets/read-embedded-assets";
 export {
-	DEFAULT_MOTION_TOKENS,
-	DEFAULT_THEME_TOKENS,
-} from "./context/default-tokens";
-export {
 	type IssueReporter,
 	type RuntimeIssue,
 	reportToConsole,
@@ -52,3 +48,26 @@ export {
 	type StartOptions,
 	startFromPage,
 } from "./start/start-from-page";
+export {
+	createThemeEngine,
+	REDUCED_MOTION_QUERY,
+	type ThemeEngine,
+	type ThemeEngineOptions,
+} from "./theme/create-theme-engine";
+export { CSS_EASINGS } from "./theme/css-easing";
+export {
+	DEFAULT_MOTION_TOKENS,
+	DEFAULT_THEME_TOKENS,
+	MINIMAL_MOTION_TOKENS,
+} from "./theme/default-tokens";
+export {
+	MOTIONS,
+	type MotionCatalog,
+	resolveMotion,
+} from "./theme/resolve-motion";
+export {
+	resolveTheme,
+	THEMES,
+	type ThemeCatalog,
+} from "./theme/resolve-theme";
+export { themeVariables } from "./theme/theme-variables";

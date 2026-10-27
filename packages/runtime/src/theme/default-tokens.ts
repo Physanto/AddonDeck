@@ -3,10 +3,7 @@
 
 import type { MotionTokens, ThemeTokens } from "@addondeck/sdk";
 
-/**
- * Theme values blocks receive until the theme engine resolves the deck's
- * theme.
- */
+/** The `paper` theme: the default one, and the one used for unknown names. */
 export const DEFAULT_THEME_TOKENS: ThemeTokens = {
 	id: "paper",
 	colors: {
@@ -27,11 +24,26 @@ export const DEFAULT_THEME_TOKENS: ThemeTokens = {
 	radius: 12,
 };
 
-/** Motion blocks receive until the theme engine resolves the deck's personality. */
+/**
+ * The `smooth` personality: the default one, also used for the personalities
+ * that are not installed.
+ */
 export const DEFAULT_MOTION_TOKENS: MotionTokens = {
 	id: "smooth",
 	duration: { xs: 150, s: 300, m: 600, l: 1000 },
 	easing: { enter: "outCubic", exit: "inCubic", move: "inOutQuad" },
 	stagger: 80,
+	overshoot: 0,
+};
+
+/**
+ * The `minimal` personality, used whenever the system asks for reduced
+ * motion. Everything changes at once.
+ */
+export const MINIMAL_MOTION_TOKENS: MotionTokens = {
+	id: "minimal",
+	duration: { xs: 0, s: 0, m: 0, l: 0 },
+	easing: { enter: "linear", exit: "linear", move: "linear" },
+	stagger: 0,
 	overshoot: 0,
 };

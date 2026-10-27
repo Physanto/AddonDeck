@@ -17,10 +17,6 @@ import {
 import type { EmbeddedAssets } from "../assets/read-embedded-assets";
 import { createEventBus } from "../context/create-event-bus";
 import {
-	DEFAULT_MOTION_TOKENS,
-	DEFAULT_THEME_TOKENS,
-} from "../context/default-tokens";
-import {
 	type IssueReporter,
 	type RuntimeIssue,
 	reportToConsole,
@@ -42,6 +38,10 @@ import { toggleFullscreen } from "../navigation/toggle-fullscreen";
 import type { PluginRegistry } from "../registry/plugin-registry";
 import { createSlideRenderer } from "../slides/create-slide-renderer";
 import { createStage, type Stage } from "../stage/create-stage";
+import {
+	DEFAULT_MOTION_TOKENS,
+	DEFAULT_THEME_TOKENS,
+} from "../theme/default-tokens";
 
 /** What {@link createRuntime} needs to show a deck. */
 export interface RuntimeOptions {

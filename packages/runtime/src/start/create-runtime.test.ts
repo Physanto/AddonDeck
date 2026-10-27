@@ -14,12 +14,12 @@ import {
 	type BoxModel,
 	createBoxPlugin,
 } from "../../test/support/box-plugin";
+import type { RuntimeIssue } from "../issues/runtime-issue";
+import { createPluginRegistry } from "../registry/create-plugin-registry";
 import {
 	DEFAULT_MOTION_TOKENS,
 	DEFAULT_THEME_TOKENS,
-} from "../context/default-tokens";
-import type { RuntimeIssue } from "../issues/runtime-issue";
-import { createPluginRegistry } from "../registry/create-plugin-registry";
+} from "../theme/default-tokens";
 import { createRuntime, type Runtime } from "./create-runtime";
 
 let runtime: Runtime | null = null;
