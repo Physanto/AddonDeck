@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright 2026 The AddonDeck Authors
 
-import type { EventBus, EventHandler } from "../services/event-bus";
+import type {
+	EventBus,
+	EventHandler,
+	EventPayload,
+} from "../services/event-bus";
 
 /** An event emitted on a {@link TestEventBus}. */
 export interface TestEvent {
@@ -33,9 +37,11 @@ export function createTestEventBus(): TestEventBus {
 	const emitted: TestEvent[] = [];
 	return {
 		emitted,
-		on(name, handler) {
+		on<N extends string>(name: N, handler: EventHandler<EventPayload<N>>) {
 			const list = handlers.get(name) ?? [];
-			const subscription: EventHandler = (payload) => handler(payload);
+			// Payloads are typed where they are emitted; the bus stores them as they come.
+			const subscription: EventHandler = (payload) =>
+				handler(payload as EventPayload<N>);
 			list.push(subscription);
 			handlers.set(name, list);
 			return () => {
@@ -43,7 +49,7 @@ export function createTestEventBus(): TestEventBus {
 				if (index !== -1) list.splice(index, 1);
 			};
 		},
-		emit(name, payload) {
+		emit(name, ...[payload]) {
 			emitted.push({ name, payload });
 			for (const handler of [...(handlers.get(name) ?? [])]) handler(payload);
 		},

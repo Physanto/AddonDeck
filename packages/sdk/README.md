@@ -60,7 +60,7 @@ AddonDeck.register({
 });
 ```
 
-`BlockPlugin`, `AdapterPlugin` and their union `Plugin` describe these objects. An adapter's `create` receives the active theme and motion tokens and returns its service (`Animator`, `PhysicsWorld`, `ChartRenderer` or `Highlighter`); `AdapterPlugin` and `AdapterEnvironment` are `@experimental` until the theme engine settles them.
+`BlockPlugin`, `AdapterPlugin` and their union `Plugin` describe these objects. An adapter's `create` receives an `AdapterEnvironment`, the deck's theme and the motion tokens in effect, and returns its service (`Animator`, `PhysicsWorld`, `ChartRenderer` or `Highlighter`). The runtime creates the animator once per deck and again when the motion personality changes; with `minimal` (always the case when the system asks for reduced motion) it animates without motion and does not call the adapter. The other services are created for each block that declares them in `needs`, so a block's physics world is its own.
 
 ## Services
 
@@ -78,7 +78,28 @@ AddonDeck.register({
 | `charts`      | Chart drawing, only with `needs: ["charts"]`                                      |
 | `highlighter` | Syntax highlighting tokens, only with `needs: ["highlighter"]`                    |
 
+`animator` and `motion` follow the motion personality in effect, which can change while a block is mounted, so read them from `ctx` when animating instead of keeping them.
+
 `PhysicsWorld`, `ChartRenderer`, `Highlighter` and `VerbPlugin` are marked `@experimental`: they will be settled together with their adapters and the scene block.
+
+## Events
+
+`ctx.events` is shared by every block of the deck. The runtime emits three events, typed by `RuntimeEvents`:
+
+| Event         | Payload           | When                                        |
+| ------------- | ----------------- | ------------------------------------------- |
+| `slide:leave` | `{ slide }`       | The current slide is about to be left       |
+| `slide:enter` | `{ slide }`       | A slide became the current one              |
+| `step:change` | `{ slide, step }` | After every move, to another click or slide |
+
+Moving to another slide emits `slide:leave`, `slide:enter` and `step:change`, in that order; the first slide shown emits only `slide:enter`. Blocks name their own events after their id (`network:step`), with any payload. Everything subscribed in `mount` is unsubscribed in `destroy`.
+
+```ts
+const off = ctx.events.on("step:change", ({ slide, step }) =>
+	update(slide, step),
+);
+ctx.events.emit("network:step", 2);
+```
 
 ## Animating
 
@@ -110,6 +131,8 @@ await animator
 ```
 
 Durations and easings left out come from the motion personality. Every `Animation` can `play`, `pause`, `seek`, `finish` and `cancel`, reports its `progress`, and its `finished` promise settles in every case, never rejecting.
+
+In `play`, create the step's animations before awaiting anything, usually as one timeline. When the presenter clicks again before they end, the runtime jumps them to their end and calls `setState(to)`; an animation started after an `await` would play over that state.
 
 `createInstantAnimator()` implements `Animator` without a library, applying final values at once: the runtime uses it for `setState`, for reduced motion and in tests. It leaves the same styles an animated adapter leaves at the end and reads the `transform` already written, so both can work on the same elements. `toCssValue()` holds the default units both share, and `getStrokeDraw()` and `setStrokeDraw()` the representation of `draw`.
 
@@ -152,7 +175,7 @@ It registers one test per rule:
 
 `checkBlockContract` runs the same rules and returns a report instead of registering tests. The kit also exports `createTestContext`, `createTestEventBus`, `createTestAssetResolver` and `trackLeaks` for a block's own tests. Vitest is an optional peer dependency, needed only by `runBlockContract`.
 
-> Status: the contracts and the contract suite are in place. The package is private until its first release.
+> Status: the contracts and the contract suite are in place; the adapter environment and the runtime events are settled. The package is private until its first release.
 
 How this package fits with the others: [contributor map](../../docs/README.md).
 

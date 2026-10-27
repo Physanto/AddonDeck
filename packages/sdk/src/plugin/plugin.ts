@@ -39,9 +39,9 @@ export interface AdapterServices {
 }
 
 /**
- * What an adapter receives to create its service.
- *
- * @experimental Settled together with the theme engine; it may change until then.
+ * What an adapter receives to create its service: the deck's theme and the
+ * motion personality in effect, which is `minimal` when the system asks for
+ * reduced motion.
  */
 export interface AdapterEnvironment {
 	readonly theme: ThemeTokens;
@@ -51,9 +51,12 @@ export interface AdapterEnvironment {
 /**
  * An adapter of one kind, as its script registers it in the page.
  *
- * @typeParam K - The kind of service the adapter creates.
+ * The runtime creates the animator once per deck, and again when the motion
+ * personality changes; with `minimal` it animates without motion and does not
+ * call the adapter. The other services are created for each block that
+ * declares them in `needs`.
  *
- * @experimental Settled together with the theme engine; it may change until then.
+ * @typeParam K - The kind of service the adapter creates.
  */
 export interface AdapterPluginOf<K extends AdapterKind> {
 	readonly kind: "adapter";
