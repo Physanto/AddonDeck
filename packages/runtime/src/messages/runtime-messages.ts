@@ -10,8 +10,11 @@ export type RuntimeMessageKey =
 	| "unregisteredBlock"
 	| "missingAdapter"
 	| "blockFailed"
+	| "stepFailed"
 	| "diagnostic"
-	| "slideLabel";
+	| "slideLabel"
+	| "problemsTitle"
+	| "watermark";
 
 /**
  * A complete runtime text catalog for one language.

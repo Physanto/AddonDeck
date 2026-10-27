@@ -29,7 +29,8 @@ export type StartOptions = Omit<RuntimeOptions, "root" | "source" | "assets">;
  * <script type="application/json" id="addondeck-assets">{…}</script>
  * ```
  *
- * The assets element is optional.
+ * The assets element is optional. Unless `options` says otherwise, only
+ * errors show on the slides, since the audience sees the page.
  *
  * @returns The running deck, or `null` when the page has no root or no deck
  * text; the problem is reported.
@@ -74,6 +75,7 @@ export function startFromPage(
 	}
 
 	return createRuntime({
+		problems: "errors",
 		...options,
 		root,
 		source: source.textContent ?? "",

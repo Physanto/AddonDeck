@@ -85,11 +85,19 @@ export type {
 	ResolvedAsset,
 } from "./services/asset-resolver";
 export type {
+	EventArgs,
 	EventBus,
 	EventHandler,
+	EventPayload,
 	Unsubscribe,
 } from "./services/event-bus";
 export type { MotionTokens } from "./services/motion-tokens";
+export type {
+	RuntimeEventName,
+	RuntimeEvents,
+	SlideEvent,
+	StepChangeEvent,
+} from "./services/runtime-events";
 export type { StageInfo } from "./services/stage-info";
 export type {
 	ThemeColors,

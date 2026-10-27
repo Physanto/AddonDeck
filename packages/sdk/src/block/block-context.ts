@@ -18,6 +18,10 @@ import type { ThemeTokens } from "../services/theme-tokens";
  * The optional services are present only when the block declares them in
  * `needs` (`physics`, `charts`, `highlighter`), because the exporter includes
  * their libraries only for decks that use them.
+ *
+ * `animator` and `motion` follow the motion personality in effect, which can
+ * change while the block is mounted (when the system starts asking for
+ * reduced motion), so read them when animating instead of keeping them.
  */
 export interface BlockContext {
 	/** Animates the block's elements in `play`. */

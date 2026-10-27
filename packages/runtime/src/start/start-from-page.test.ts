@@ -132,4 +132,19 @@ describe("startFromPage", () => {
 			'Falta "addondeck-source".',
 		]);
 	});
+
+	it("shows only errors on the slides, since the audience sees the page", () => {
+		page({ source: "watermark: maybe\n\n# One" });
+		startPage();
+		expect(document.querySelector(".adk-error-card")).toBeNull();
+		runtime?.destroy();
+		document.body.replaceChildren();
+		page({ source: "format: 9\n\n# One" });
+		startPage();
+		expect(
+			document
+				.querySelector(".adk-error-card li")
+				?.getAttribute("data-severity"),
+		).toBe("error");
+	});
 });

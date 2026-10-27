@@ -24,6 +24,12 @@ export interface BlockInstance {
 	 * When the returned promise resolves, the block must look exactly as after
 	 * `setState(to)`. The runtime only calls it after `setState(from)` or a
 	 * previous `play` that ended at `from`.
+	 *
+	 * Create the step's animations with `ctx.animator` before awaiting
+	 * anything, usually as one timeline. When the presenter clicks again
+	 * before they end, the runtime jumps them to their end and calls
+	 * `setState(to)`; an animation started after an `await` would play over
+	 * that state.
 	 */
 	play(from: number, to: number): Promise<void>;
 	/** Adapts the block to a new size of its area, when it lays itself out. */

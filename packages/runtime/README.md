@@ -47,9 +47,42 @@ Without a `layout` option, text that starts a slide followed by more content bec
 
 The current slide and its two neighbors stay mounted, the neighbors hidden and inert, so moving to them is immediate; slides further away are destroyed. Content without a block to draw it shows a placeholder with its type and its text.
 
+## Steps
+
+Each slide has a step plan, compiled from its blocks and its annotated text (see [Step plan](../../docs/format/v1.md#step-plan)), and a step timeline that plays it:
+
+- Moving to the next click animates: every block that advances in it plays `play(from, to)` at the same time.
+- Any other move, backwards, from the address hash or to another slide, shows the step at once with `setState`. A block's state after `n` clicks is the end of its last advance among them.
+- A click that arrives while the previous one animates first jumps its animations to their end and sets its blocks to its state, then goes on. However fast the presenter clicks, the slide ends as slow clicks would leave it.
+- Leaving a slide finishes the click it was animating. The previous slide waits at its end and the next one at its start, as moving to them finds them.
+
+A block that throws or rejects while changing step is reported and set to the step's state; the presentation goes on.
+
+## Theme and motion
+
+The theme engine resolves the header's `theme` and `motion`, writes `color`, `accent` and `font` over the theme, and sets the result as CSS variables on the viewport: `--color-*`, `--font-*` and `--radius` for blocks, and `--adk-duration-*` and `--adk-easing-*` for the runtime's own transitions. The variables live on the deck's element, so several decks in one page keep their own theme.
+
+Until the theme catalog arrives, the runtime ships the `paper` theme and the `smooth` and `minimal` personalities; other names fall back to `paper` and `smooth`. When the system asks for reduced motion, `minimal` is used whatever the deck says, and the setting is followed while the deck is shown. With `minimal` everything changes at once: durations are 0 and blocks get an animator without motion.
+
+Each block receives its own `BlockContext`: the shared animator, theme, motion, assets, events and stage, plus a physics world, a chart renderer or a highlighter only when its definition declares them in `needs`. A physics world belongs to its block and is destroyed with it.
+
+## Events
+
+The runtime emits `slide:leave`, `slide:enter` and `step:change` on the bus every block shares (payloads typed by `RuntimeEvents` in `@addondeck/sdk`). Moving to another slide emits the three in that order; a click inside a slide emits only `step:change`; the first slide shown emits `slide:enter`. `runtime.events` gives the same bus to the code that hosts the deck.
+
+## Transitions
+
+A slide's `transition` (`none`, `fade`, `slide` or `zoom`; `fade` by default) plays when moving to it from the previous slide, and in reverse when moving back from it, using the motion tokens. Jumping further, from the address hash or with `Home` and `End`, cuts. With reduced motion, transitions take no time.
+
+## Problems and watermark
+
+Problems found in the deck text are shown in a card on the slide they belong to (header problems on the first slide). `createRuntime` shows warnings and errors, for previews; an exported page (`AddonDeck.start()`) shows the card only for errors, since the audience sees it. The `problems` option (`"all"` or `"errors"`) chooses. The card can be folded, and clicking its title does not move forward.
+
+Unless the header says `watermark: off`, a small "Made with AddonDeck" badge, worded from the text catalog, sits in the bottom right corner, inside the slide padding where blocks never draw.
+
 ## As a library
 
-`createRuntime({ root, source, registry })` shows a deck inside any element, which is how the Studio previews and how the development page works. The package also exports the parts it is built from: `createPluginRegistry`, `createNavigator`, `fitStage`, `parseDeckHash` and `formatDeckHash`, `arrangeSlide` and the English text catalog.
+`createRuntime({ root, source, registry })` shows a deck inside any element, which is how the Studio previews and how the development page works. The package also exports the parts it is built from: `createPluginRegistry`, `createNavigator`, `createStepTimeline` and `stepStates`, `createThemeEngine`, `resolveTheme`, `resolveMotion` and `themeVariables`, `fitStage`, `parseDeckHash` and `formatDeckHash`, `arrangeSlide` and the English text catalog.
 
 ## Development page
 
@@ -59,7 +92,7 @@ pnpm --filter @addondeck/runtime dev:page
 
 Opens any deck of `examples/` with the runtime sources. Editing a deck or the runtime reloads the page; the address keeps the deck (`?deck=hello`) and the position. The page lives in `dev/` and is not published.
 
-> Status: stage, navigation and start-up are in place; steps, themes, events and transitions come next. The package is private until its first release.
+> Status: stage, navigation, steps, themes, events, transitions, the problem card and the watermark are in place; the presenter view, overview, sections and print come next. The package is private until its first release.
 
 How this package fits with the others: [contributor map](../../docs/README.md).
 
