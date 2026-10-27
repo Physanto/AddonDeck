@@ -1,0 +1,102 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* Copyright 2026 The AddonDeck Authors */
+
+/*
+ * Base styles of the runtime. Colors, fonts and radius come from the theme
+ * variables; spacing is in stage pixels, since the stage is always 1920×1080.
+ */
+
+.adk-viewport {
+	--adk-slide-padding: 96px;
+	--adk-gap: 48px;
+	position: fixed;
+	inset: 0;
+	overflow: hidden;
+	background: var(--color-surface);
+	/* Horizontal swipes navigate; vertical panning and zoom stay with the browser. */
+	touch-action: pan-y pinch-zoom;
+}
+
+.adk-stage {
+	position: absolute;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+	transform-origin: 0 0;
+	background: var(--color-bg);
+	color: var(--color-text);
+	font-family: var(--font-body);
+}
+
+.adk-slide {
+	position: absolute;
+	inset: 0;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	gap: var(--adk-gap);
+	padding: var(--adk-slide-padding);
+}
+
+.adk-slide:not([data-state="current"]) {
+	visibility: hidden;
+}
+
+.adk-slide-header {
+	flex: none;
+}
+
+.adk-slide-body {
+	flex: 1;
+	min-height: 0;
+	display: grid;
+	gap: var(--adk-gap);
+	grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+}
+
+.adk-slide[data-flow="columns"] .adk-slide-body {
+	grid-template: minmax(0, 1fr) / none;
+	grid-auto-flow: column;
+	grid-auto-columns: minmax(0, 1fr);
+}
+
+.adk-slide[data-flow="rows"] .adk-slide-body {
+	grid-template: none / minmax(0, 1fr);
+	grid-auto-rows: minmax(0, 1fr);
+}
+
+.adk-block {
+	position: relative;
+	min-width: 0;
+	min-height: 0;
+}
+
+.adk-placeholder {
+	box-sizing: border-box;
+	height: 100%;
+	overflow: hidden;
+	padding: 32px;
+	border: 2px dashed var(--color-muted);
+	border-radius: var(--radius);
+	font-size: 32px;
+}
+
+.adk-placeholder[data-error] {
+	border-color: var(--color-bad);
+}
+
+.adk-placeholder-type {
+	font-family: var(--font-code);
+	color: var(--color-muted);
+}
+
+.adk-placeholder-source {
+	margin: 16px 0 0;
+	font-family: var(--font-code);
+	white-space: pre-wrap;
+}
+
+.adk-placeholder-message {
+	margin: 16px 0 0;
+	color: var(--color-bad);
+}

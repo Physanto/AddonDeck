@@ -10,6 +10,11 @@
 			"@addondeck/source": "./src/index.ts",
 			"types": "./dist/index.d.ts",
 			"default": "./dist/index.js"
+		},
+		"./browser": "./dist/browser.iife.js",
+		"./runtime.css": {
+			"@addondeck/source": "./src/runtime.css",
+			"default": "./dist/runtime.css"
 		}
 	},
 	"files": [
@@ -18,10 +23,15 @@
 	"scripts": {
 		"build": "tsdown",
 		"dev": "tsdown --watch",
-		"typecheck": "tsc"
+		"dev:page": "vite --config dev/vite.config.ts",
+		"typecheck": "tsc && tsc -p dev && tsc -p test"
 	},
 	"dependencies": {
 		"@addondeck/core": "workspace:*",
 		"@addondeck/sdk": "workspace:*"
+	},
+	"devDependencies": {
+		"happy-dom": "^20.14.6",
+		"vite": "^8.3.5"
 	}
 }

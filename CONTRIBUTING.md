@@ -47,6 +47,7 @@ pnpm check           # lint, formatting, types and dependency rules
 pnpm format          # fix formatting and safe lint issues
 pnpm build           # build every package
 pnpm dev             # rebuild packages on every change
+pnpm --filter @addondeck/runtime dev:page   # show the example decks in the browser
 ```
 
 Packages import each other straight from their sources, so tests and type checks don't need a build first.
@@ -98,7 +99,7 @@ Tests use [Vitest](https://vitest.dev/) and live next to the code they test, as 
 | The parser                                                          | The new case and, for a new diagnostic, its code in the [format specification](docs/format/v1.md#diagnostics), its message in the text catalog and a fixture deck named after the code in `packages/core/test/fixtures/` |
 | Documentation only                                                  | None                                                                                                                                                                                                                     |
 
-**Coverage:** `core`, `sdk` and `exporter` must each keep at least 90% of lines covered, and CI enforces it (`pnpm test:coverage`), because everything else depends on them. Other packages have no minimum: we prefer a few tests that check real behavior over many that only raise the percentage.
+**Coverage:** `core`, `sdk`, `runtime` and `exporter` must each keep at least 90% of lines covered, and CI enforces it (`pnpm test:coverage`), because everything else depends on them. Other packages have no minimum: we prefer a few tests that check real behavior over many that only raise the percentage.
 
 ---
 

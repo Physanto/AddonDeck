@@ -46,6 +46,22 @@ export const quoteView: BlockView<{ text: string }> = {
 
 The runtime decides which steps play in each click from the slide's step plan (default order, `@n` and `→ id`; see the [format specification](../../docs/format/v1.md#step-plan)).
 
+## Registering
+
+In an exported deck, each block and adapter is a classic script that registers itself with the runtime when it loads. The definition travels with the view, because the runtime parses the deck in the browser:
+
+```ts
+AddonDeck.register({ kind: "block", definition: quote, view: quoteView });
+
+AddonDeck.register({
+	kind: "adapter",
+	adapter: "animator",
+	create: ({ motion }) => createAnimeAnimator({ motion }),
+});
+```
+
+`BlockPlugin`, `AdapterPlugin` and their union `Plugin` describe these objects. An adapter's `create` receives the active theme and motion tokens and returns its service (`Animator`, `PhysicsWorld`, `ChartRenderer` or `Highlighter`); `AdapterPlugin` and `AdapterEnvironment` are `@experimental` until the theme engine settles them.
+
 ## Services
 
 `mount` receives a `BlockContext` with the services the runtime provides:

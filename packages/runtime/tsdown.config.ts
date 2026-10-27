@@ -3,13 +3,31 @@
 
 import { defineConfig } from "tsdown";
 
-export default defineConfig({
-	platform: "browser",
-	target: "es2022",
-	format: {
-		esm: {},
-		// Classic script: exported decks load the runtime from file://, where module scripts are blocked.
-		iife: { globalName: "AddonDeck" },
+export default defineConfig([
+	{
+		entry: ["src/index.ts"],
+		platform: "browser",
+		target: "es2022",
+		fixedExtension: false,
+		copy: [{ from: "src/runtime.css", to: "dist" }],
 	},
-	fixedExtension: false,
-});
+	{
+		// Classic script: exported decks load the runtime from file://, where
+		// module scripts are blocked (ADR 002). It carries core and sdk inside,
+		// since a page has nothing to import them from, built from their sources.
+		entry: { browser: "src/browser.ts" },
+		platform: "browser",
+		target: "es2022",
+		format: "iife",
+		globalName: "AddonDeck",
+		deps: { alwaysBundle: [/^@addondeck\//] },
+		inputOptions: {
+			resolve: {
+				conditionNames: ["@addondeck/source", "import", "browser", "default"],
+			},
+		},
+		dts: false,
+		minify: true,
+		clean: false,
+	},
+]);
