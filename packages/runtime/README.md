@@ -45,7 +45,9 @@ Slides are drawn on a 1920×1080 stage scaled to fit its container, with bands o
 
 Without a `layout` option, text that starts a slide followed by more content becomes its header; then one piece fills the slide, two sit side by side and more stack in rows. `layout=columns` and `layout=rows` choose the flow.
 
-The current slide and its two neighbors stay mounted, the neighbors hidden and inert, so moving to them is immediate; slides further away are destroyed. Content without a block to draw it shows a placeholder with its type and its text.
+The current slide and its two neighbors stay mounted, the neighbors hidden and inert, so moving to them is immediate; slides further away are destroyed.
+
+Text is drawn by the registered `text` block, read as if it were written as `text:` with the same lines; its annotated lines are steps like those of any block. Content without a block to draw it shows a placeholder with its type and its text: text while no `text` block is registered, and blocks that are not registered, could not be read or failed to mount.
 
 ## Steps
 
