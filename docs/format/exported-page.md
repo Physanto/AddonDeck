@@ -32,6 +32,7 @@ An exported deck is one HTML file that opens with a double click, from `file://`
 - `generator` names the version of the runtime the page embeds.
 - `author` is present when the header has `author:`, and `addondeck-credits` when an embedded asset carries an attribution, with each one separated by `; `.
 - Every script is a classic script (ADR 002). Blocks and adapters register themselves with `AddonDeck.register` as they run; `AddonDeck.start()` then reads the deck text and the assets and shows the deck.
+- A page exported without the watermark ends with `AddonDeck.start({ watermark: false })` instead, which hides it whatever the deck's `watermark:` says. The deck text stays as written.
 - The page holds only what the deck uses: the `text` block when the deck has text, the other blocks it draws, the animator unless its `motion:` is `minimal`, the adapters its blocks declare in `needs`, and the assets its blocks name with `assets`. A deck without assets has no `#addondeck-assets` element.
 
 ## The deck text

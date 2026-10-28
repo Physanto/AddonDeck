@@ -82,6 +82,7 @@ export async function exportDeck(
 			untitled: options.messages?.untitled ?? EN_EXPORT_MESSAGES.untitled,
 			version: runtime.version,
 			credits,
+			watermark: options.watermark !== false,
 		},
 		inlineParts(source, { ...artifacts, runtime }, assets),
 	);

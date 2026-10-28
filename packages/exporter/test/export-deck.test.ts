@@ -292,6 +292,25 @@ describe("exportDeck", () => {
 		]);
 	});
 
+	it("asks the runtime to hide the watermark, keeping the deck text", async () => {
+		const source = "# Hi";
+		const { html } = await exportDeck(
+			source,
+			{ registry: createTestRegistry(), watermark: false },
+			createTestIO(),
+		).then((result) => {
+			if (!result.ok) throw new Error("did not export");
+			return result;
+		});
+		const page = readPage(html);
+		expect(scripts(page).at(-1)).toBe("AddonDeck.start({ watermark: false });");
+		expect(
+			unescapeEmbeddedSource(
+				page.getElementById("addondeck-source")?.textContent ?? "",
+			),
+		).toBe(source);
+	});
+
 	it("stops at errors in the deck, without reading any artifact", async () => {
 		const io = createTestIO();
 		const result = await exportDeck(

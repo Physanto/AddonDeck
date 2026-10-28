@@ -23,6 +23,11 @@ export interface ExportOptions {
 	 * exported, even so.
 	 */
 	readonly force?: boolean;
+	/**
+	 * `false` hides the watermark whatever the deck's `watermark:` says. The
+	 * deck text is embedded unchanged; the page asks the runtime instead.
+	 */
+	readonly watermark?: boolean;
 	/** Exporter messages of the active language. */
 	readonly messages?: PartialExportMessages;
 	/** Parser messages of the active language. */

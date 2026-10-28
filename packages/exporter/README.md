@@ -21,6 +21,7 @@ else
 
 - `options.registry` holds the block definitions the deck is parsed with. Their `needs` decide the adapters included and their `assets(model)` the assets embedded.
 - `options.force` exports even with errors; without the runtime nothing can be exported.
+- `options.watermark: false` hides the watermark whatever the deck's `watermark:` says. The deck text is embedded unchanged; the page starts the runtime with `{ watermark: false }`.
 - `io.artifacts` (`ArtifactSource`) reads the compiled files of each package of artifacts (`@addondeck/runtime`, `@addondeck/blocks`, `@addondeck/adapters`…). Each package has a `manifest.json` that lists its pieces; when two packages offer the same piece, the first one listed wins.
 - `io.assets` (`AssetResolver`) returns the bytes of each asset reference, such as `image:team.jpg`, or `null`.
 
