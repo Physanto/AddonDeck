@@ -25,7 +25,8 @@
 			"@addondeck/source": "./src/*/styles.css",
 			"default": "./dist/*/styles.css"
 		},
-		"./browser/*": "./dist/browser/*.iife.js"
+		"./browser/*": "./dist/browser/*.iife.js",
+		"./manifest.json": "./dist/manifest.json"
 	},
 	"files": [
 		"dist"

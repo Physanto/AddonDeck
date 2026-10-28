@@ -83,7 +83,7 @@ Inlined code is changed only where it could end its element, and always in a way
 
 ## The artifact manifest
 
-The exporter learns which compiled file holds each piece from a `manifest.json` at the root of each package of artifacts. The builds of `@addondeck/runtime`, `@addondeck/blocks` and `@addondeck/adapters` write it to their `dist/`:
+The exporter learns which compiled file holds each piece from a `manifest.json` at the root of each package of artifacts. The builds of `@addondeck/runtime`, `@addondeck/blocks` and `@addondeck/adapters` write it to their `dist/`, and each package exports it as `<package>/manifest.json`, so a tool finds the folder of the artifacts by resolving that path:
 
 ```json
 {
@@ -102,5 +102,5 @@ The exporter learns which compiled file holds each piece from a `manifest.json` 
 ```
 
 - `kind` is `runtime`, `block`, `adapter` or `theme`. `name` is the block type, the adapter kind, the theme name, or `runtime`.
-- `script` and `styles` are paths relative to the package. A piece has at least one of them, and a block or an adapter needs its `script`.
+- `script` and `styles` are paths relative to the folder of the manifest. A piece has at least one of them, and a block or an adapter needs its `script`.
 - When two packages offer the same piece, the exporter takes it from the first package it was given.
