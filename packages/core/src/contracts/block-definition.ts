@@ -43,4 +43,9 @@ export interface BlockDefinition<M = unknown> {
 	parse(source: BlockSource): ParseResult<M>;
 	/** Steps the block offers, in order of appearance. */
 	steps(model: M): readonly StepDef[];
+	/**
+	 * References of the assets the block shows, such as `image:team.jpg`. The
+	 * exporter embeds only these, so a block that leaves it out gets no assets.
+	 */
+	assets?(model: M): readonly string[];
 }

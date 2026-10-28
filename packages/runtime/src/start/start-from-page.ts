@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright 2026 The AddonDeck Authors
 
+import { unescapeEmbeddedSource } from "@addondeck/core";
 import { readEmbeddedAssets } from "../assets/read-embedded-assets";
 import { reportToConsole } from "../issues/runtime-issue";
 import { createTranslator } from "../messages/create-translator";
@@ -29,7 +30,8 @@ export type StartOptions = Omit<RuntimeOptions, "root" | "source" | "assets">;
  * <script type="application/json" id="addondeck-assets">{…}</script>
  * ```
  *
- * The assets element is optional. Unless `options` says otherwise, only
+ * The deck text is escaped as `escapeEmbeddedSource` of `@addondeck/core`
+ * does, and the assets element is optional. Unless `options` says otherwise, only
  * errors show on the slides, since the audience sees the page.
  *
  * @returns The running deck, or `null` when the page has no root or no deck
@@ -78,7 +80,7 @@ export function startFromPage(
 		problems: "errors",
 		...options,
 		root,
-		source: source.textContent ?? "",
+		source: unescapeEmbeddedSource(source.textContent ?? ""),
 		assets: embedded.assets,
 	});
 }

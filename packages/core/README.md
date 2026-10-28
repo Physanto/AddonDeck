@@ -13,6 +13,7 @@ It defines:
 - `compileStepPlan`, which turns the default order, `@n` and `→ id` of a slide into the text and blocks that advance in each click;
 - helpers that blocks reuse: `extractStepAnnotations` for `@n` and `→ id`, `normalizeKeyword` and `closestKeyword`;
 - diagnostics with stable codes and a translatable message catalog (`createDiagnostic`).
+- `escapeEmbeddedSource` and `unescapeEmbeddedSource`, the reversible escaping of the deck text inside an exported page ([exported page](../../docs/format/exported-page.md)).
 
 ```ts
 import { createBlockRegistry, parse } from "@addondeck/core";

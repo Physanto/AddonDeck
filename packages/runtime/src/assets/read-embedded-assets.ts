@@ -24,12 +24,24 @@ export interface EmbeddedAssetsResult {
 	readonly invalid: readonly string[];
 }
 
-function toAsset(value: unknown): ResolvedAsset | null {
-	if (typeof value !== "object" || value === null) return null;
-	const { kind, url, credit } = value as Record<string, unknown>;
+type JsonObject = Readonly<Record<string, unknown>>;
+
+function isObject(value: unknown): value is JsonObject {
+	return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function toAsset(value: unknown, files: JsonObject): ResolvedAsset | null {
+	if (!isObject(value)) return null;
+	const { kind, file, credit } = value;
 	if (typeof kind !== "string" || !ASSET_KINDS.includes(kind)) return null;
-	if (typeof url !== "string") return null;
 	if (credit !== undefined && typeof credit !== "string") return null;
+	const url =
+		value.url !== undefined
+			? value.url
+			: typeof file === "string" && Object.hasOwn(files, file)
+				? files[file]
+				: undefined;
+	if (typeof url !== "string") return null;
 	return {
 		kind: kind as AssetKind,
 		url,
@@ -38,14 +50,18 @@ function toAsset(value: unknown): ResolvedAsset | null {
 }
 
 /**
- * Reads the assets the exporter embeds next to the deck text: a JSON object
- * whose keys are references and whose values are resolved assets.
+ * Reads the assets the exporter embeds next to the deck text. The JSON holds
+ * each file once, under `files`, and each reference written in the deck under
+ * `assets`, pointing at its file; an entry may also carry its own `url`.
  *
  * @param json - The JSON text; blank text means no assets.
  *
  * @example
  * ```ts
- * readEmbeddedAssets('{"image:logo.png": {"kind": "image", "url": "data:image/png;base64,…"}}');
+ * readEmbeddedAssets(`{
+ *   "files": { "sha256-…": "data:image/png;base64,…" },
+ *   "assets": { "image:logo.png": { "kind": "image", "file": "sha256-…" } }
+ * }`);
  * ```
  */
 export function readEmbeddedAssets(json: string): EmbeddedAssetsResult {
@@ -58,12 +74,20 @@ export function readEmbeddedAssets(json: string): EmbeddedAssetsResult {
 		const error = thrown instanceof Error ? thrown.message : String(thrown);
 		return { assets, error, invalid: [] };
 	}
-	if (typeof data !== "object" || data === null || Array.isArray(data)) {
+	if (!isObject(data)) {
 		return { assets, error: "not a JSON object", invalid: [] };
 	}
+	const files = data.files ?? {};
+	const entries = data.assets ?? {};
+	if (!isObject(files)) {
+		return { assets, error: '"files" is not a JSON object', invalid: [] };
+	}
+	if (!isObject(entries)) {
+		return { assets, error: '"assets" is not a JSON object', invalid: [] };
+	}
 	const invalid: string[] = [];
-	for (const [reference, value] of Object.entries(data)) {
-		const asset = toAsset(value);
+	for (const [reference, value] of Object.entries(entries)) {
+		const asset = toAsset(value, files);
 		if (asset === null) invalid.push(reference);
 		else assets.set(reference, asset);
 	}

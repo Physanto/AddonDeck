@@ -38,6 +38,8 @@ export const quoteView: BlockView<{ text: string }> = {
 };
 ```
 
+Two optional fields of the definition tell the exporter what to embed: `needs` lists the adapters the block uses (`physics`, `charts`, `highlighter`) and `assets(model)` returns the references of the assets it shows, such as `["image:team.jpg"]`. A block that leaves `assets` out gets no assets in an exported deck.
+
 `mount` returns a `BlockInstance`:
 
 - `setState(n)` shows the block after `n` of its steps, at once. It must be idempotent and work backwards.

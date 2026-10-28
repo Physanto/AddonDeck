@@ -28,6 +28,8 @@ When someone opens the exported file, the runtime reads the embedded deck text, 
 
 The text format is specified in [docs/format/v1.md](format/v1.md): what each line means, the defaults, and every diagnostic code.
 
+The exported file is described in [docs/format/exported-page.md](format/exported-page.md): its layout, how the deck text and the assets are embedded, and the artifact manifest each package of compiled scripts provides.
+
 ## Design principles
 
 These settle most discussions. A change that breaks one needs a [decision record](adr/).
@@ -45,18 +47,18 @@ These settle most discussions. A change that breaks one needs a [decision record
 
 ## Repository layout
 
-| Path                           | Contents                                                                                    |
-| ------------------------------ | ------------------------------------------------------------------------------------------- |
-| `packages/`                    | The libraries that make up the engine (table below)                                         |
-| `apps/studio/`                 | The web app: forms, editor, live preview and export                                         |
-| `apps/cli/`                    | The `addondeck` command line tool                                                           |
-| `tooling/`                     | Checks for the repository itself, such as the dependency rule tests and the changeset check |
-| [`docs/adr/`](adr/)            | Architecture decision records                                                               |
-| [`licenses/`](../licenses/)    | Full license texts of third-party components                                                |
-| [`docs/format/`](format/v1.md) | Specification of the `.deck` format, the source of truth for the parser                     |
-| `docs/guides/`                 | _(planned)_ How to create a block, a verb, a theme or a translation                         |
-| [`examples/`](../examples/)    | Example decks, which double as a gallery and as tests                                       |
-| `ai/`                          | _(planned)_ Instructions and evals for using AddonDeck with language models                 |
+| Path                           | Contents                                                                                          |
+| ------------------------------ | ------------------------------------------------------------------------------------------------- |
+| `packages/`                    | The libraries that make up the engine (table below)                                               |
+| `apps/studio/`                 | The web app: forms, editor, live preview and export                                               |
+| `apps/cli/`                    | The `addondeck` command line tool                                                                 |
+| `tooling/`                     | Checks for the repository itself, such as the dependency rule tests and the changeset check       |
+| [`docs/adr/`](adr/)            | Architecture decision records                                                                     |
+| [`licenses/`](../licenses/)    | Full license texts of third-party components                                                      |
+| [`docs/format/`](format/v1.md) | Specification of the `.deck` format, the source of truth for the parser, and of the exported page |
+| `docs/guides/`                 | _(planned)_ How to create a block, a verb, a theme or a translation                               |
+| [`examples/`](../examples/)    | Example decks, which double as a gallery and as tests                                             |
+| `ai/`                          | _(planned)_ Instructions and evals for using AddonDeck with language models                       |
 
 ## Packages
 
@@ -126,16 +128,17 @@ A theme will be data: colors, fonts, corner radius, background and a motion pers
 
 ## Decision records
 
-| ADR                                          | Decision                                              |
-| -------------------------------------------- | ----------------------------------------------------- |
-| [001](adr/001-own-engine.md)                 | Own presentation engine instead of Slidev             |
-| [002](adr/002-classic-script-runtime.md)     | Runtime as a classic script (IIFE)                    |
-| [003](adr/003-animejs-over-gsap.md)          | anime.js v4 instead of GSAP                           |
-| [004](adr/004-text-as-the-api.md)            | The `.deck` text is the only API, with no server      |
-| [005](adr/005-single-html-output.md)         | A single HTML file as the default output              |
-| [006](adr/006-pnpm-monorepo.md)              | Monorepo with pnpm workspaces                         |
-| [007](adr/007-apache-2-license.md)           | Apache License 2.0                                    |
-| [008](adr/008-english-and-language-packs.md) | English repository, other languages as language packs |
-| [009](adr/009-own-markdown-subset.md)        | Own Markdown subset that builds the DOM               |
+| ADR                                                   | Decision                                                              |
+| ----------------------------------------------------- | --------------------------------------------------------------------- |
+| [001](adr/001-own-engine.md)                          | Own presentation engine instead of Slidev                             |
+| [002](adr/002-classic-script-runtime.md)              | Runtime as a classic script (IIFE)                                    |
+| [003](adr/003-animejs-over-gsap.md)                   | anime.js v4 instead of GSAP                                           |
+| [004](adr/004-text-as-the-api.md)                     | The `.deck` text is the only API, with no server                      |
+| [005](adr/005-single-html-output.md)                  | A single HTML file as the default output                              |
+| [006](adr/006-pnpm-monorepo.md)                       | Monorepo with pnpm workspaces                                         |
+| [007](adr/007-apache-2-license.md)                    | Apache License 2.0                                                    |
+| [008](adr/008-english-and-language-packs.md)          | English repository, other languages as language packs                 |
+| [009](adr/009-own-markdown-subset.md)                 | Own Markdown subset that builds the DOM                               |
+| [010](adr/010-exported-page-and-artifact-manifest.md) | Exported page layout, embedded files by hash and an artifact manifest |
 
 To record a new decision, copy [the template](adr/000-template.md).

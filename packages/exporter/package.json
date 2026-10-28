@@ -18,10 +18,14 @@
 	"scripts": {
 		"build": "tsdown",
 		"dev": "tsdown --watch",
-		"typecheck": "tsc"
+		"typecheck": "tsc && tsc -p test"
 	},
 	"dependencies": {
-		"@addondeck/core": "workspace:*",
-		"@addondeck/assets": "workspace:*"
+		"@addondeck/assets": "workspace:*",
+		"@addondeck/core": "workspace:*"
+	},
+	"devDependencies": {
+		"fast-check": "^4.10.2",
+		"happy-dom": "^20.14.6"
 	}
 }

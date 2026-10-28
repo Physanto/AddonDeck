@@ -4,6 +4,7 @@
 import { existsSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { defineConfig, type UserConfig } from "tsdown";
+import { artifactManifest } from "../../tooling/build/artifact-manifest-plugin.ts";
 
 const SOURCES = new URL("./src/", import.meta.url);
 
@@ -57,6 +58,17 @@ const modules: UserConfig = {
 		from: `src/${name}/styles.css`,
 		to: `dist/${name}`,
 	})),
+	plugins: [
+		artifactManifest(
+			new URL("./package.json", import.meta.url),
+			BLOCKS.map((name) => ({
+				kind: "block",
+				name,
+				script: `browser/${name}.iife.js`,
+				styles: `${name}/styles.css`,
+			})),
+		),
+	],
 };
 
 // Classic scripts, one per block, that an exported deck inlines only when it

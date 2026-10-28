@@ -264,6 +264,13 @@ importers:
       '@addondeck/core':
         specifier: workspace:*
         version: link:../core
+    devDependencies:
+      fast-check:
+        specifier: ^4.10.2
+        version: 4.10.2
+      happy-dom:
+        specifier: ^20.14.6
+        version: 20.14.6
 
   packages/runtime:
     dependencies:
@@ -305,6 +312,9 @@ importers:
       '@addondeck/core':
         specifier: workspace:*
         version: link:../packages/core
+      '@addondeck/exporter':
+        specifier: workspace:*
+        version: link:../packages/exporter
 
 packages:
 

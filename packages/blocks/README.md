@@ -14,7 +14,7 @@ Every block lives in its own folder under `src/` and only talks to the SDK. Bloc
 
 ```
 src/list/
-├── definition.ts   # exports `definition`: type, aliases, parse and steps; pure, no DOM
+├── definition.ts   # exports `definition`: type, aliases, parse, steps and assets; pure, no DOM
 ├── view.ts         # exports `view`: mount, draws and animates through BlockContext
 ├── messages.ts     # English messages of the block's diagnostics, by code
 ├── styles.css      # theme variables only, `adk-` classes, sizes in stage pixels
@@ -37,6 +37,8 @@ The build finds the blocks itself: every folder of `src/` with a `definition.ts`
 | `dist/browser/<type>.iife.js` | `@addondeck/blocks/browser/<type>`    | Exported decks                            |
 
 The browser file is a classic script that registers the block with `AddonDeck.register` when it loads, after the runtime script, so an exported deck works from `file://` ([ADR 002](../../docs/adr/002-classic-script-runtime.md)). It carries the parts of `core` and `sdk` the block uses.
+
+The build also writes `dist/manifest.json`, which tells the exporter the script and the styles of each block ([exported page](../../docs/format/exported-page.md)).
 
 The runtime's development page loads every block from its sources and lists each block's examples: `pnpm --filter @addondeck/runtime dev:page`.
 

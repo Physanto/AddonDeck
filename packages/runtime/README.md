@@ -18,10 +18,12 @@ Exported decks open with a double click, from `file://`, where browsers refuse m
 <script>AddonDeck.start();</script>
 ```
 
+The build also writes `dist/manifest.json`, which tells the exporter where the script and the styles are.
+
 - `AddonDeck.register(plugin)` adds a block (`{ kind: "block", definition, view }`) or an adapter (`{ kind: "adapter", adapter, create }`). A malformed plugin, or a second one with the same type, keyword or adapter kind, throws.
 - `AddonDeck.start()` reads the deck text and the assets, and shows the deck in `#addondeck`. Calling it again returns the deck already shown.
 
-The assets element is optional. It holds a JSON object whose keys are the references written in the deck and whose values are resolved assets: `{ "image:logo.png": { "kind": "image", "url": "data:…", "credit": "…" } }`.
+The deck text is escaped so it cannot close its element, and the runtime reads it back with `unescapeEmbeddedSource` of `@addondeck/core`. The assets element is optional. It holds each file once, under `files`, and each reference written in the deck under `assets`, pointing at its file: `{ "files": { "sha256-…": "data:…" }, "assets": { "image:logo.png": { "kind": "image", "file": "sha256-…", "credit": "…" } } }`. An entry may carry its own `url` instead of `file`. The whole page is described in [the exported page](../../docs/format/exported-page.md).
 
 Problems go to the browser console, worded from the runtime's text catalog. A block the parser does not know is reported as a block whose script is missing, and a block whose adapter is missing shows the problem in its place.
 
