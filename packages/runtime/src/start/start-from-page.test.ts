@@ -62,6 +62,12 @@ describe("startFromPage", () => {
 		).not.toBeNull();
 	});
 
+	it("reads back the escaped deck text", () => {
+		page({ source: "# One <\\/script> <\\!-- x" });
+		startPage();
+		expect(runtime?.deck.meta.title).toBe("One </script> <!-- x");
+	});
+
 	it("reports a page without a root", () => {
 		page({ root: false, source: "# One" });
 		expect(startPage()).toEqual([
@@ -104,8 +110,10 @@ describe("startFromPage", () => {
 		page({
 			source: "# One",
 			assets: JSON.stringify({
-				"image:a.png": { kind: "image", url: "data:," },
-				"image:b.png": { kind: "image" },
+				assets: {
+					"image:a.png": { kind: "image", url: "data:," },
+					"image:b.png": { kind: "image" },
+				},
 			}),
 		});
 		expect(startPage()).toEqual([
