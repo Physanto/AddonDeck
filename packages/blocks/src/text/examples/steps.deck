@@ -1,0 +1,20 @@
+format: 1
+title: Text in steps
+
+## Three reasons to take the train
+
+The first line is shown from the start.
+
+1. It is faster    @1
+2. It is cheaper   @2
+3. It is greener   @3
+
+---
+
+## A text with an id
+
+text id=summary:
+  - Faster
+  - Cheaper
+
+Show the first idea  → summary

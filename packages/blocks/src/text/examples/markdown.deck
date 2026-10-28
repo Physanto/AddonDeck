@@ -1,0 +1,39 @@
+format: 1
+title: Markdown text
+
+# Markdown text
+Headings, paragraphs, lists and quotes from plain lines
+
+---
+
+## Why trains
+
+They are **faster** than buses between these cities,
+and you can *work* on board with `wifi`.
+
+- Lisbon to Coimbra: 1 h 40 min
+- Coimbra to Porto: 1 h
+  - With a stop in Aveiro
+
+> Read the [timetable](https://example.com/timetable) before you go.
+
+<b>This tag is shown as written, not as bold text.</b>
+
+---
+
+## The same Markdown in an explicit block
+
+text id=details:
+  ### Before you travel
+
+  1. Buy the ticket **online**
+  2. Arrive *ten minutes* early
+
+  ```
+  departure: 09:15
+  platform:  4
+  ```
+
+  ***
+
+  > Trains run every hour.

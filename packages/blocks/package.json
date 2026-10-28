@@ -10,7 +10,22 @@
 			"@addondeck/source": "./src/index.ts",
 			"types": "./dist/index.d.ts",
 			"default": "./dist/index.js"
-		}
+		},
+		"./*/definition": {
+			"@addondeck/source": "./src/*/definition.ts",
+			"types": "./dist/*/definition.d.ts",
+			"default": "./dist/*/definition.js"
+		},
+		"./*/view": {
+			"@addondeck/source": "./src/*/view.ts",
+			"types": "./dist/*/view.d.ts",
+			"default": "./dist/*/view.js"
+		},
+		"./*/styles.css": {
+			"@addondeck/source": "./src/*/styles.css",
+			"default": "./dist/*/styles.css"
+		},
+		"./browser/*": "./dist/browser/*.iife.js"
 	},
 	"files": [
 		"dist"
@@ -23,5 +38,9 @@
 	"dependencies": {
 		"@addondeck/core": "workspace:*",
 		"@addondeck/sdk": "workspace:*"
+	},
+	"devDependencies": {
+		"happy-dom": "^20.14.6",
+		"vite": "^8.3.5"
 	}
 }

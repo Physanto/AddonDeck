@@ -1,0 +1,18 @@
+format: 1
+title: Images
+
+## Where we work
+
+image landscape.svg alt="Green hills under a blue sky with a yellow sun" fit=cover:
+
+---
+
+## Two ways to fit an image
+
+image src=train.svg alt="A red train with three windows" fit=contain:
+
+image src=landscape.svg alt="" fit=cover:
+
+---
+
+image train.svg alt="A red train with three windows":

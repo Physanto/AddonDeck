@@ -1,0 +1,11 @@
+format: 1
+title: A list in steps
+
+## How we build a feature
+
+list:
+  - Gather the **requirements**
+  - Design the solution
+    - Sketch it on paper
+    - Review it with the team
+  - Build it and `test` it
