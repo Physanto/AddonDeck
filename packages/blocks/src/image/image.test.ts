@@ -114,6 +114,16 @@ describe("image block", () => {
 		).toEqual([]);
 	});
 
+	it("names its image as the asset to embed", () => {
+		expect(
+			definition.assets?.({
+				reference: "image:a.png",
+				alt: "",
+				fit: "contain",
+			}),
+		).toEqual(["image:a.png"]);
+	});
+
 	it("draws the resolved image with its alt text and fit", () => {
 		const { el } = mount({ reference: "image:a.png", alt: "A", fit: "cover" });
 		const figure = el.querySelector("figure");

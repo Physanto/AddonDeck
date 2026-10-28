@@ -14,7 +14,7 @@ Every block lives in its own folder under `src/` and only talks to the SDK. Bloc
 
 ```
 src/list/
-├── definition.ts   # exports `definition`: type, aliases, parse and steps; pure, no DOM
+├── definition.ts   # exports `definition`: type, aliases, parse, steps and assets; pure, no DOM
 ├── view.ts         # exports `view`: mount, draws and animates through BlockContext
 ├── messages.ts     # English messages of the block's diagnostics, by code
 ├── styles.css      # theme variables only, `adk-` classes, sizes in stage pixels

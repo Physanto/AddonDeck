@@ -102,4 +102,5 @@ export const definition: BlockDefinition<ImageModel> = {
 		};
 	},
 	steps: () => [],
+	assets: (model) => [model.reference],
 };
