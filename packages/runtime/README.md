@@ -45,7 +45,9 @@ Slides are drawn on a 1920×1080 stage scaled to fit its container, with bands o
 
 Without a `layout` option, text that starts a slide followed by more content becomes its header; then one piece fills the slide, two sit side by side and more stack in rows. `layout=columns` and `layout=rows` choose the flow.
 
-The current slide and its two neighbors stay mounted, the neighbors hidden and inert, so moving to them is immediate; slides further away are destroyed. Content without a block to draw it shows a placeholder with its type and its text.
+The current slide and its two neighbors stay mounted, the neighbors hidden and inert, so moving to them is immediate; slides further away are destroyed.
+
+Text is drawn by the registered `text` block, read as if it were written as `text:` with the same lines; its annotated lines are steps like those of any block. Content without a block to draw it shows a placeholder with its type and its text: text while no `text` block is registered, and blocks that are not registered, could not be read or failed to mount.
 
 ## Steps
 
@@ -90,7 +92,7 @@ Unless the header says `watermark: off`, a small "Made with AddonDeck" badge, wo
 pnpm --filter @addondeck/runtime dev:page
 ```
 
-Opens any deck of `examples/` with the runtime sources. Editing a deck or the runtime reloads the page; the address keeps the deck (`?deck=hello`) and the position. The page lives in `dev/` and is not published.
+Opens any deck of `examples/`, or of a block's `examples/` folder (`?deck=list/steps`), with the sources of the runtime, of every block in `packages/blocks/src/` and of the anime.js animator. Decks refer to the files of `examples/assets/` by name, as uploaded images (`image train.svg:`). Editing a deck, a block or the runtime reloads the page; the address keeps the deck (`?deck=hello`) and the position. The page lives in `dev/` and is not published.
 
 > Status: stage, navigation, steps, themes, events, transitions, the problem card and the watermark are in place; the presenter view, overview, sections and print come next. The package is private until its first release.
 

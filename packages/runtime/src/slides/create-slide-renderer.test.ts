@@ -172,6 +172,63 @@ describe("createSlideRenderer", () => {
 		expect(issues).toEqual([]);
 	});
 
+	it("draws text with the text block, as if it were written as text:", () => {
+		const log: BoxLog = [];
+		const { renderer, slide } = setup("# Hello\nAnimated *slides*", [
+			createBoxPlugin(log, { type: "text" }),
+		]);
+		renderer.show(0);
+		expect(log).toEqual(["mount:# Hello"]);
+		const block = slide(0)?.querySelector('.adk-block[data-type="text"]');
+		expect(block?.querySelector(".adk-placeholder")).toBeNull();
+		expect(block?.querySelector(".test-box")?.textContent).toBe(
+			"# Hello\nAnimated *slides*",
+		);
+	});
+
+	it("plays the annotated lines of a text on the text block", () => {
+		const log: BoxLog = [];
+		const { renderer } = setup("- a  @1\n- b  @2", [
+			createBoxPlugin(log, { type: "text", logSteps: true }),
+		]);
+		renderer.show(0);
+		log.length = 0;
+		renderer.goToStep(1);
+		renderer.goToStep(2);
+		// The second click finishes the first one before it plays.
+		expect(log).toEqual([
+			"play:- a  @1:0-1",
+			"set:- a  @1:1",
+			"play:- a  @1:1-2",
+		]);
+		expect(renderer.timeline(0)?.step).toBe(2);
+	});
+
+	it("shows text as a placeholder when the text block cannot read it", () => {
+		const text: BlockPlugin = {
+			kind: "block",
+			definition: {
+				type: "text",
+				aliases: [],
+				version: "1.0.0",
+				parse: () => ({ model: null, diagnostics: [] }),
+				steps: () => [],
+			},
+			view: {
+				type: "text",
+				mount: () => {
+					throw new Error("never mounted");
+				},
+			},
+		};
+		const { renderer, slide, issues } = setup("Hi", [text]);
+		renderer.show(0);
+		expect(
+			slide(0)?.querySelector(".adk-placeholder-source")?.textContent,
+		).toBe("Hi");
+		expect(issues).toEqual([]);
+	});
+
 	it("shows a block its definition could not read as a placeholder", () => {
 		const log: BoxLog = [];
 		const { renderer, slide, issues } = setup("box broken:\n  a", [

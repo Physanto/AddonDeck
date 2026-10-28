@@ -1,0 +1,118 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* Copyright 2026 The AddonDeck Authors */
+
+/* Sizes are in stage pixels: the stage is always 1920×1080. */
+
+.adk-text {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	overflow: hidden;
+	color: var(--color-text);
+	font-family: var(--font-body);
+	font-size: 40px;
+	line-height: 1.35;
+	overflow-wrap: break-word;
+}
+
+/* A text that opens with the main heading is a title: it sits in the middle of its space. */
+.adk-text:has(> h1:first-child) {
+	justify-content: center;
+}
+
+.adk-text > * {
+	flex: none;
+}
+
+.adk-text :is(p, ul, ol, blockquote, pre, hr) {
+	margin: 0 0 0.6em;
+}
+
+.adk-text :is(p, ul, ol, blockquote, pre, hr):last-child {
+	margin-bottom: 0;
+}
+
+.adk-text :is(h1, h2, h3, h4, h5, h6) {
+	margin: 0 0 0.4em;
+	font-family: var(--font-heading);
+	line-height: 1.1;
+}
+
+.adk-text h1 {
+	font-size: 96px;
+}
+
+.adk-text h2 {
+	font-size: 72px;
+}
+
+.adk-text h3 {
+	font-size: 56px;
+}
+
+.adk-text :is(h4, h5, h6) {
+	font-size: 44px;
+}
+
+.adk-text h1 + p {
+	color: var(--color-muted);
+	font-size: 48px;
+}
+
+/* Each source line stays on its own line and can rise into place on its step. */
+.adk-text .adk-md-line {
+	display: inline-block;
+}
+
+.adk-text :is(ul, ol) {
+	padding-left: 1.3em;
+}
+
+.adk-text li + li,
+.adk-text li > :is(ul, ol) {
+	margin-top: 0.25em;
+}
+
+.adk-text li::marker {
+	color: var(--color-primary);
+}
+
+.adk-text a {
+	color: var(--color-primary);
+}
+
+.adk-text code {
+	padding: 0.05em 0.3em;
+	border-radius: calc(var(--radius) / 2);
+	background: var(--color-surface);
+	font-family: var(--font-code);
+	font-size: 0.9em;
+}
+
+.adk-text pre {
+	padding: 24px 32px;
+	border-radius: var(--radius);
+	background: var(--color-surface);
+	font-size: 32px;
+	line-height: 1.4;
+	overflow: hidden;
+}
+
+.adk-text pre code {
+	padding: 0;
+	background: none;
+	font-size: inherit;
+}
+
+.adk-text blockquote {
+	padding-left: 32px;
+	border-left: 6px solid var(--color-accent);
+	color: var(--color-muted);
+}
+
+.adk-text hr {
+	width: 100%;
+	border: none;
+	border-top: 2px solid var(--color-muted);
+}

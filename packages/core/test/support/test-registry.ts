@@ -20,6 +20,17 @@ export const SEQUENCE_BLOCK: BlockDefinition<readonly string[]> = {
 	steps: () => [],
 };
 
+/** Stand-ins for the built-in blocks the examples use; they keep the body lines. */
+export const LIST_BLOCK: BlockDefinition<readonly string[]> = {
+	...SEQUENCE_BLOCK,
+	type: "list",
+};
+
+export const IMAGE_BLOCK: BlockDefinition<readonly string[]> = {
+	...SEQUENCE_BLOCK,
+	type: "image",
+};
+
 /** Test block that always throws while parsing, to exercise `E201`. */
 export const EXPLODE_BLOCK: BlockDefinition = {
 	type: "explode",
@@ -50,5 +61,11 @@ export const REVEAL_BLOCK: BlockDefinition<readonly SourceLine[]> = {
 
 /** The registry the fixtures and the examples are parsed with. */
 export function createTestRegistry(): BlockRegistry {
-	return createBlockRegistry([SEQUENCE_BLOCK, EXPLODE_BLOCK, REVEAL_BLOCK]);
+	return createBlockRegistry([
+		SEQUENCE_BLOCK,
+		LIST_BLOCK,
+		IMAGE_BLOCK,
+		EXPLODE_BLOCK,
+		REVEAL_BLOCK,
+	]);
 }

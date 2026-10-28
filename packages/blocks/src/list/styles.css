@@ -1,0 +1,54 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* Copyright 2026 The AddonDeck Authors */
+
+/* Sizes are in stage pixels: the stage is always 1920×1080. */
+
+.adk-list {
+	box-sizing: border-box;
+	height: 100%;
+	margin: 0;
+	padding-left: 1.3em;
+	overflow: hidden;
+	color: var(--color-text);
+	font-family: var(--font-body);
+	font-size: 44px;
+	line-height: 1.35;
+	overflow-wrap: break-word;
+}
+
+.adk-list > li + li {
+	margin-top: 0.4em;
+}
+
+.adk-list > li::marker {
+	color: var(--color-primary);
+}
+
+.adk-list > li:not([data-level="0"]) {
+	font-size: 0.85em;
+	list-style-type: circle;
+}
+
+.adk-list > li[data-level="1"] {
+	margin-left: 1.2em;
+}
+
+.adk-list > li[data-level="2"] {
+	margin-left: 2.4em;
+}
+
+.adk-list > li:not([data-level="0"], [data-level="1"], [data-level="2"]) {
+	margin-left: 3.6em;
+}
+
+.adk-list a {
+	color: var(--color-primary);
+}
+
+.adk-list code {
+	padding: 0.05em 0.3em;
+	border-radius: calc(var(--radius) / 2);
+	background: var(--color-surface);
+	font-family: var(--font-code);
+	font-size: 0.9em;
+}

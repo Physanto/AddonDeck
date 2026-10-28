@@ -1,0 +1,42 @@
+format: 1
+title: Why we take the train
+theme: paper
+motion: smooth
+
+# Why we take the train
+Text, lists and images in one deck
+
+---
+
+## Three reasons
+
+list:
+  - **Faster** between city centers
+  - *Cheaper* when you book early
+  - Greener: a fraction of the emissions
+
+---
+
+## A day on the line
+
+image landscape.svg alt="Green hills under a blue sky with a yellow sun" fit=cover:
+
+---
+
+## Our train
+
+image train.svg alt="A red train with three windows":
+
+- Three cars       @1
+- Wifi on board    @2
+- Bikes welcome    @3
+
+---
+
+## Before you travel
+
+1. Buy the ticket **online**
+2. Arrive *ten minutes* early
+3. Check the [timetable](https://example.com/timetable)
+
+> Trains run every hour.

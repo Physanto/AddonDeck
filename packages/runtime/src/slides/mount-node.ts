@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright 2026 The AddonDeck Authors
 
-import type { BlockNode, SlideNode } from "@addondeck/core";
+import type { BlockNode, SlideNode, TextNode } from "@addondeck/core";
 import type { BlockContext } from "@addondeck/sdk";
 import {
 	type BlockServices,
@@ -34,12 +34,38 @@ function blockLines(node: BlockNode): string[] {
 }
 
 /**
+ * Reads a text with the registered `text` block, as if it were written as
+ * `text:` with the same lines. The parser already reported the problems of
+ * its step annotations, so the diagnostics are dropped.
+ *
+ * @returns The model, or `null` when there is no text block or it fails.
+ */
+function readText(node: TextNode, registry: PluginRegistry): unknown {
+	const definition = registry.blocks().resolve("text");
+	if (definition === undefined) return null;
+	try {
+		return definition.parse({
+			type: "text",
+			keyword: "text",
+			id: null,
+			args: [],
+			options: [],
+			body: node.lines,
+			location: node.location,
+		}).model;
+	} catch {
+		return null;
+	}
+}
+
+/**
  * Draws one piece of slide content inside `el`.
  *
- * Content without a block to draw it gets a placeholder: text until the text
- * block exists, a block its definition could not read (the parser already
- * reported why), and a block that is missing an adapter or fails to mount,
- * which is also reported.
+ * Text is drawn by the `text` block, like a block written as `text:`.
+ * Content without a block to draw it gets a placeholder: text while no text
+ * block is registered, a block its definition could not read (the parser
+ * already reported why), and a block that is missing an adapter or fails to
+ * mount, which is also reported.
  *
  * The block gets a context with the adapters it declares in `needs`.
  *
@@ -50,19 +76,19 @@ export function mountNode(
 	el: HTMLElement,
 	options: MountNodeOptions,
 ): MountedBlock | null {
-	if (node.kind === "text") {
-		mountPlaceholder(el, { type: "text", lines: rawLines(node.lines) });
-		return null;
-	}
 	const { registry, translate, report } = options;
-	const view = registry.view(node.type);
-	if (view === undefined || node.model === null) {
-		mountPlaceholder(el, { type: node.type, lines: blockLines(node) });
+	const type = node.kind === "text" ? "text" : node.type;
+	const model = node.kind === "text" ? readText(node, registry) : node.model;
+	const lines = (): string[] =>
+		node.kind === "text" ? rawLines(node.lines) : blockLines(node);
+	const view = registry.view(type);
+	if (view === undefined || model === null) {
+		mountPlaceholder(el, { type, lines: lines() });
 		return null;
 	}
 
 	const line = node.location.line;
-	const needs = registry.blocks().resolve(node.type)?.needs ?? [];
+	const needs = registry.blocks().resolve(type)?.needs ?? [];
 	// The animator falls back to one without motion, so it is never missing.
 	const missing = needs.find(
 		(kind) => kind !== "animator" && registry.adapter(kind) === undefined,
@@ -70,18 +96,18 @@ export function mountNode(
 	if (missing !== undefined) {
 		const error = translate("missingAdapter", {
 			line,
-			type: node.type,
+			type,
 			adapter: missing,
 		});
 		report({ severity: "error", message: error });
-		mountPlaceholder(el, { type: node.type, lines: blockLines(node), error });
+		mountPlaceholder(el, { type, lines: lines(), error });
 		return null;
 	}
 
 	let services: BlockServices | null = null;
 	try {
 		services = createBlockContext(options.context, needs, registry);
-		const instance = view.mount(node.model, el, services.context);
+		const instance = view.mount(model, el, services.context);
 		const { finishAnimations, destroy } = services;
 		return {
 			instance,
@@ -98,11 +124,11 @@ export function mountNode(
 		services?.destroy();
 		const error = translate("blockFailed", {
 			line,
-			type: node.type,
+			type,
 			reason: describeError(thrown),
 		});
 		report({ severity: "error", message: error });
-		mountPlaceholder(el, { type: node.type, lines: blockLines(node), error });
+		mountPlaceholder(el, { type, lines: lines(), error });
 		return null;
 	}
 }

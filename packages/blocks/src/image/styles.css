@@ -1,0 +1,48 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* Copyright 2026 The AddonDeck Authors */
+
+/* Sizes are in stage pixels: the stage is always 1920×1080. */
+
+.adk-image {
+	box-sizing: border-box;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	overflow: hidden;
+	border-radius: var(--radius);
+}
+
+.adk-image img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
+
+.adk-image[data-fit="cover"] img {
+	object-fit: cover;
+}
+
+.adk-image-missing {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 16px;
+	height: 100%;
+	padding: 32px;
+	border: 2px dashed var(--color-muted);
+	border-radius: var(--radius);
+	background: var(--color-surface);
+	color: var(--color-muted);
+	font-family: var(--font-body);
+	font-size: 32px;
+	text-align: center;
+}
+
+.adk-image-missing code {
+	font-family: var(--font-code);
+	font-size: 24px;
+	overflow-wrap: anywhere;
+}

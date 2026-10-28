@@ -103,21 +103,22 @@ Dependencies always point inward, toward `core` and `sdk`. `core` depends on not
 
 To import another workspace package, add it to `dependencies` with `"workspace:*"` and import it by name (`@addondeck/core`). Packages resolve each other's TypeScript sources directly, so no build is needed for tests or type checks.
 
-## Adding a block _(planned)_
+## Adding a block
 
-A block will be a folder under `packages/blocks/src/`, discovered automatically, so adding one won't require editing any other file:
+A block is a folder under `packages/blocks/src/`, discovered automatically by the build and by the development page, so adding one doesn't require editing any other file:
 
 ```
 packages/blocks/src/sequence/
-├── definition.ts     # type, aliases, parse and steps; pure, no DOM
-├── view.ts           # mount: draws and animates through BlockContext
+├── definition.ts     # exports `definition`: type, aliases, parse and steps; pure, no DOM
+├── view.ts           # exports `view`: mount, draws and animates through BlockContext
+├── messages.ts       # English messages of its diagnostics, `SEQUENCE-W01` and so on
 ├── styles.css        # theme variables only, never fixed colors
 ├── docs.md           # short English documentation, also read by language models
 ├── examples/         # .deck examples, which are also tests
 └── sequence.test.ts
 ```
 
-Every block passes the same contract suite, `runBlockContract` from `@addondeck/sdk/testing`: `parse` never throws, `setState(n)` is idempotent and matches the result of animating to step `n`, going back works, `destroy()` leaves nothing behind, and the docs and examples are valid. The [SDK readme](../packages/sdk/README.md) lists every rule. To propose a block, open a "New block" issue.
+Every block passes the same contract suite, `runBlockContract` from `@addondeck/sdk/testing`: `parse` never throws, `setState(n)` is idempotent and matches the result of animating to step `n`, going back works, `destroy()` leaves nothing behind, and the docs and examples are valid. The [SDK readme](../packages/sdk/README.md) lists every rule and the shared helpers (Markdown, revealing elements, diagnostics); the [blocks readme](../packages/blocks/README.md) describes what the build produces. `text`, `list` and `image` are small examples to start from. To propose a block, open a "New block" issue.
 
 ## Adding a theme _(planned)_
 
@@ -135,5 +136,6 @@ A theme will be data: colors, fonts, corner radius, background and a motion pers
 | [006](adr/006-pnpm-monorepo.md)              | Monorepo with pnpm workspaces                         |
 | [007](adr/007-apache-2-license.md)           | Apache License 2.0                                    |
 | [008](adr/008-english-and-language-packs.md) | English repository, other languages as language packs |
+| [009](adr/009-own-markdown-subset.md)        | Own Markdown subset that builds the DOM               |
 
 To record a new decision, copy [the template](adr/000-template.md).

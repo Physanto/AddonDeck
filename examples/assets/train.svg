@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <title>A red train with three windows</title>
+  <rect width="800" height="600" fill="#f2f2f2"/>
+  <rect x="40" y="470" width="720" height="16" rx="8" fill="#666666"/>
+  <rect x="120" y="180" width="520" height="250" rx="48" fill="#c2410c"/>
+  <rect x="170" y="230" width="120" height="90" rx="16" fill="#ffffff"/>
+  <rect x="320" y="230" width="120" height="90" rx="16" fill="#ffffff"/>
+  <rect x="470" y="230" width="120" height="90" rx="16" fill="#ffffff"/>
+  <rect x="120" y="360" width="520" height="24" fill="#8a2e08"/>
+  <circle cx="230" cy="450" r="36" fill="#333333"/>
+  <circle cx="530" cy="450" r="36" fill="#333333"/>
+  <circle cx="230" cy="450" r="12" fill="#cccccc"/>
+  <circle cx="530" cy="450" r="12" fill="#cccccc"/>
+</svg>

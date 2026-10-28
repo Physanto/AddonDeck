@@ -63,6 +63,7 @@ export type { SourceLocation } from "./model/source-location";
 export type { SpeakerNotes } from "./model/speaker-notes";
 export type { StepAnnotation } from "./model/step-annotation";
 export type { TextNode } from "./model/text-node";
+export { closesFence, type Fence, readFence } from "./parser/fence";
 export { parse } from "./parser/parse";
 export type {
 	InstalledResources,

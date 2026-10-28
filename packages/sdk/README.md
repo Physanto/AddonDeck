@@ -136,6 +136,38 @@ In `play`, create the step's animations before awaiting anything, usually as one
 
 `createInstantAnimator()` implements `Animator` without a library, applying final values at once: the runtime uses it for `setState`, for reduced motion and in tests. It leaves the same styles an animated adapter leaves at the end and reads the `transform` already written, so both can work on the same elements. `toCssValue()` holds the default units both share, and `getStrokeDraw()` and `setStrokeDraw()` the representation of `draw`.
 
+## Revealing content
+
+`setRevealed(animator, elements, revealed)` hides elements below their place or shows them in place, at once; `playReveal(ctx, elements)` makes hidden ones rise into place, one after another, with the deck's motion. Both end with the same styles, so a block that reveals items one per step can write:
+
+```ts
+setState: (step) =>
+	items.forEach((item, index) => setRevealed(ctx.animator, [item], index < step)),
+play: (from, to) => playReveal(ctx, items.slice(from, to)),
+```
+
+## Markdown
+
+Blocks that show text use the same Markdown as slide text ([ADR 009](../../docs/adr/009-own-markdown-subset.md)):
+
+- `parseMarkdown(lines)` reads source lines into plain data: headings, paragraphs, lists, block quotes, fenced code and rules. It takes step annotations off every line outside code fences and lists the annotated lines in `document.annotated`.
+- `parseInline(text)` reads strong text, emphasis, inline code, links and escapes.
+- `renderMarkdown(document, el)` and `renderInline(nodes, el)` build the DOM with elements and text nodes, never HTML strings, so tags written in a deck show as written. `renderMarkdown` returns the element that shows each source line, to reveal annotated lines on their steps.
+- `safeHref(destination)` keeps `http`, `https` and `mailto` addresses and `#` fragments; links to anything else keep only their text.
+
+`readFence` and `closesFence`, re-exported from `core`, recognize code fences exactly as the step plan does.
+
+## Diagnostics of a block
+
+A block reports problems with codes of its own, `<TYPE>-<letter><number>`, from a catalog of English messages:
+
+```ts
+const MESSAGES: BlockMessages<"QUOTE-W01"> = {
+	"QUOTE-W01": { severity: "warning", message: "The quote has no author." },
+};
+createBlockDiagnostic(MESSAGES, "QUOTE-W01", source.location);
+```
+
 ## Testing a block
 
 `@addondeck/sdk/testing` holds the block contract suite. Every block runs it from its test file, in a DOM environment such as happy-dom:

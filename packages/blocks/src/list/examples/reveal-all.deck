@@ -1,0 +1,21 @@
+format: 1
+title: A list shown at once
+
+## Release checklist
+
+list reveal=all:
+  1. Plan
+  2. Build
+  3. Ship
+
+---
+
+## Two lists in step
+
+list id=questions:
+  - Is it fast?
+  - Is it cheap?
+
+list:
+  - Yes, 1 h 40 min   → questions
+  - Yes, from 12 €    → questions
