@@ -32,7 +32,7 @@ Each stage lives in its own file under `src/pipeline/`:
 
 | Stage   | What it does                                                                                                                                                        |
 | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| parse   | Parses the text with the registry. Errors stop the export here, unless forced.                                                                                      |
+| parse   | Parses the text with the registry and compiles each slide's step plan, as the runtime does. Errors stop the export here, unless forced.                             |
 | analyze | Lists the blocks drawn (`text` when there is text), the adapters (the animator unless the motion is `minimal`, plus the blocks' `needs`), the theme and the assets. |
 | collect | Reads the manifests, scripts and styles of those pieces, and resolves the assets, keeping each distinct file once by its SHA-256 hash (Web Crypto).                 |
 | inline  | Escapes every part so that none can close its element, and puts them in page order.                                                                                 |

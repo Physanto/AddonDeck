@@ -279,6 +279,19 @@ describe("exportDeck", () => {
 		expect(problems(missing)[0]?.message).toBe("Falta image:a.png.");
 	});
 
+	it("reports the problems of the step plans after those of the parser", async () => {
+		const result = await exportDeck(
+			"format: 1\nmotion: wobbly\n\nordered 2 1:",
+			{ registry: createTestRegistry() },
+			createTestIO(),
+		);
+		expect(result.diagnostics.map((d) => d.code)).toEqual([
+			"W303",
+			"W315",
+			"EXPORT-E03",
+		]);
+	});
+
 	it("stops at errors in the deck, without reading any artifact", async () => {
 		const io = createTestIO();
 		const result = await exportDeck(
