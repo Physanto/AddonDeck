@@ -723,3 +723,366 @@ Mention the bike carriages.",
   ],
 }
 `;
+
+exports[`examples > trains.deck parses without diagnostics 1`] = `
+{
+  "header": [
+    {
+      "key": "format",
+      "keyword": "format",
+      "location": {
+        "column": 1,
+        "line": 1,
+      },
+      "value": "1",
+    },
+    {
+      "key": "title",
+      "keyword": "title",
+      "location": {
+        "column": 1,
+        "line": 2,
+      },
+      "value": "Why we take the train",
+    },
+    {
+      "key": "theme",
+      "keyword": "theme",
+      "location": {
+        "column": 1,
+        "line": 3,
+      },
+      "value": "paper",
+    },
+    {
+      "key": "motion",
+      "keyword": "motion",
+      "location": {
+        "column": 1,
+        "line": 4,
+      },
+      "value": "smooth",
+    },
+  ],
+  "meta": {
+    "accent": null,
+    "author": "",
+    "background": null,
+    "color": null,
+    "font": null,
+    "format": 1,
+    "language": "en",
+    "motion": "smooth",
+    "theme": "paper",
+    "title": "Why we take the train",
+    "watermark": true,
+  },
+  "sections": [],
+  "slides": [
+    {
+      "content": [
+        {
+          "kind": "text",
+          "lines": [
+            {
+              "line": 6,
+              "raw": "# Why we take the train",
+              "text": "# Why we take the train",
+            },
+            {
+              "line": 7,
+              "raw": "Text, lists and images in one deck",
+              "text": "Text, lists and images in one deck",
+            },
+          ],
+          "location": {
+            "column": 1,
+            "line": 6,
+          },
+        },
+      ],
+      "index": 0,
+      "location": {
+        "column": 1,
+        "line": 6,
+      },
+      "notes": null,
+      "options": {
+        "background": null,
+        "layout": "auto",
+        "transition": "fade",
+      },
+      "section": null,
+    },
+    {
+      "content": [
+        {
+          "kind": "text",
+          "lines": [
+            {
+              "line": 11,
+              "raw": "## Three reasons",
+              "text": "## Three reasons",
+            },
+          ],
+          "location": {
+            "column": 1,
+            "line": 11,
+          },
+        },
+        {
+          "args": [],
+          "body": [
+            {
+              "line": 14,
+              "raw": "  - **Faster** between city centers",
+              "text": "- **Faster** between city centers",
+            },
+            {
+              "line": 15,
+              "raw": "  - *Cheaper* when you book early",
+              "text": "- *Cheaper* when you book early",
+            },
+            {
+              "line": 16,
+              "raw": "  - Greener: a fraction of the emissions",
+              "text": "- Greener: a fraction of the emissions",
+            },
+          ],
+          "id": null,
+          "keyword": "list",
+          "kind": "block",
+          "location": {
+            "column": 1,
+            "line": 13,
+          },
+          "model": [
+            "- **Faster** between city centers",
+            "- *Cheaper* when you book early",
+            "- Greener: a fraction of the emissions",
+          ],
+          "options": [],
+          "type": "list",
+        },
+      ],
+      "index": 1,
+      "location": {
+        "column": 1,
+        "line": 11,
+      },
+      "notes": null,
+      "options": {
+        "background": null,
+        "layout": "auto",
+        "transition": "fade",
+      },
+      "section": null,
+    },
+    {
+      "content": [
+        {
+          "kind": "text",
+          "lines": [
+            {
+              "line": 20,
+              "raw": "## A day on the line",
+              "text": "## A day on the line",
+            },
+          ],
+          "location": {
+            "column": 1,
+            "line": 20,
+          },
+        },
+        {
+          "args": [
+            "landscape.svg",
+          ],
+          "body": [],
+          "id": null,
+          "keyword": "image",
+          "kind": "block",
+          "location": {
+            "column": 1,
+            "line": 22,
+          },
+          "model": [],
+          "options": [
+            {
+              "key": "alt",
+              "location": {
+                "column": 21,
+                "line": 22,
+              },
+              "name": "alt",
+              "value": "Green hills under a blue sky with a yellow sun",
+            },
+            {
+              "key": "fit",
+              "location": {
+                "column": 74,
+                "line": 22,
+              },
+              "name": "fit",
+              "value": "cover",
+            },
+          ],
+          "type": "image",
+        },
+      ],
+      "index": 2,
+      "location": {
+        "column": 1,
+        "line": 20,
+      },
+      "notes": null,
+      "options": {
+        "background": null,
+        "layout": "auto",
+        "transition": "fade",
+      },
+      "section": null,
+    },
+    {
+      "content": [
+        {
+          "kind": "text",
+          "lines": [
+            {
+              "line": 26,
+              "raw": "## Our train",
+              "text": "## Our train",
+            },
+          ],
+          "location": {
+            "column": 1,
+            "line": 26,
+          },
+        },
+        {
+          "args": [
+            "train.svg",
+          ],
+          "body": [],
+          "id": null,
+          "keyword": "image",
+          "kind": "block",
+          "location": {
+            "column": 1,
+            "line": 28,
+          },
+          "model": [],
+          "options": [
+            {
+              "key": "alt",
+              "location": {
+                "column": 17,
+                "line": 28,
+              },
+              "name": "alt",
+              "value": "A red train with three windows",
+            },
+          ],
+          "type": "image",
+        },
+        {
+          "kind": "text",
+          "lines": [
+            {
+              "line": 30,
+              "raw": "- Three cars       @1",
+              "text": "- Three cars       @1",
+            },
+            {
+              "line": 31,
+              "raw": "- Wifi on board    @2",
+              "text": "- Wifi on board    @2",
+            },
+            {
+              "line": 32,
+              "raw": "- Bikes welcome    @3",
+              "text": "- Bikes welcome    @3",
+            },
+          ],
+          "location": {
+            "column": 1,
+            "line": 30,
+          },
+        },
+      ],
+      "index": 3,
+      "location": {
+        "column": 1,
+        "line": 26,
+      },
+      "notes": null,
+      "options": {
+        "background": null,
+        "layout": "auto",
+        "transition": "fade",
+      },
+      "section": null,
+    },
+    {
+      "content": [
+        {
+          "kind": "text",
+          "lines": [
+            {
+              "line": 36,
+              "raw": "## Before you travel",
+              "text": "## Before you travel",
+            },
+            {
+              "line": 37,
+              "raw": "",
+              "text": "",
+            },
+            {
+              "line": 38,
+              "raw": "1. Buy the ticket **online**",
+              "text": "1. Buy the ticket **online**",
+            },
+            {
+              "line": 39,
+              "raw": "2. Arrive *ten minutes* early",
+              "text": "2. Arrive *ten minutes* early",
+            },
+            {
+              "line": 40,
+              "raw": "3. Check the [timetable](https://example.com/timetable)",
+              "text": "3. Check the [timetable](https://example.com/timetable)",
+            },
+            {
+              "line": 41,
+              "raw": "",
+              "text": "",
+            },
+            {
+              "line": 42,
+              "raw": "> Trains run every hour.",
+              "text": "> Trains run every hour.",
+            },
+          ],
+          "location": {
+            "column": 1,
+            "line": 36,
+          },
+        },
+      ],
+      "index": 4,
+      "location": {
+        "column": 1,
+        "line": 36,
+      },
+      "notes": null,
+      "options": {
+        "background": null,
+        "layout": "auto",
+        "transition": "fade",
+      },
+      "section": null,
+    },
+  ],
+}
+`;
