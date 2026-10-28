@@ -54,7 +54,10 @@ export default defineConfig({
 			},
 			{
 				extends: true,
-				test: { name: "apps", include: ["apps/*/src/**/*.test.ts"] },
+				test: {
+					name: "apps",
+					include: ["apps/*/src/**/*.test.ts", "apps/*/test/**/*.test.ts"],
+				},
 			},
 			{
 				extends: true,

@@ -196,12 +196,21 @@ importers:
 
   apps/cli:
     dependencies:
+      '@addondeck/adapters':
+        specifier: workspace:*
+        version: link:../../packages/adapters
+      '@addondeck/blocks':
+        specifier: workspace:*
+        version: link:../../packages/blocks
       '@addondeck/core':
         specifier: workspace:*
         version: link:../../packages/core
       '@addondeck/exporter':
         specifier: workspace:*
         version: link:../../packages/exporter
+      '@addondeck/runtime':
+        specifier: workspace:*
+        version: link:../../packages/runtime
 
   apps/studio:
     dependencies:
