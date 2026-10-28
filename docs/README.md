@@ -75,7 +75,7 @@ Each package has one responsibility. The "Must never" column is what keeps the s
 | `assets`       | Catalog of emojis, icons, fonts and backgrounds, with licenses and resolvers                     | `core`                        | —                                                |
 | `exporter`     | Analyze a deck, gather what it uses and embed it in one HTML file (or a zip)                     | `core`, `assets`              | Depend on the DOM or on the file system directly |
 | `studio` (app) | Web interface                                                                                    | `core`, `exporter`, `runtime` | Reimplement parsing or rendering                 |
-| `cli` (app)    | Terminal interface                                                                               | `core`, `exporter`            | Reimplement parsing or rendering                 |
+| `cli` (app)    | Terminal interface                                                                               | `core`, `exporter`, `blocks`  | Reimplement parsing or rendering                 |
 
 ## The dependency rule
 
@@ -92,6 +92,8 @@ Dependencies always point inward, toward `core` and `sdk`. `core` depends on not
                         │          │  └──── adapters
                      themes        └─────── blocks
 ```
+
+The command line imports `blocks` only for their definitions (`BLOCK_DEFINITIONS`), which are pure: it parses decks with them. It reads the compiled scripts of `runtime`, `blocks` and `adapters` as files, through their `manifest.json`, and never imports them.
 
 `pnpm check` verifies it with [dependency-cruiser](https://github.com/sverweij/dependency-cruiser), using the rules in [`.dependency-cruiser.mjs`](../.dependency-cruiser.mjs), and CI runs the same check on every pull request. Besides the table above, it also rejects:
 
