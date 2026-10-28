@@ -311,6 +311,14 @@ describe("createRuntime", () => {
 		expect(hidden.root.querySelector(".adk-watermark")).toBeNull();
 	});
 
+	it("lets the page hide or show the watermark whatever the deck says", () => {
+		const hidden = start("# One", [], { watermark: false });
+		expect(hidden.root.querySelector(".adk-watermark")).toBeNull();
+		runtime?.destroy();
+		const shown = start("watermark: off\n\n# One", [], { watermark: true });
+		expect(shown.root.querySelector(".adk-watermark")).not.toBeNull();
+	});
+
 	it("words the watermark from the active language", () => {
 		const { root } = start("# One", [], {
 			messages: { watermark: "Hecho con AddonDeck" },
