@@ -9,6 +9,7 @@
 		"typecheck": "tsc"
 	},
 	"devDependencies": {
-		"@addondeck/core": "workspace:*"
+		"@addondeck/core": "workspace:*",
+		"@addondeck/exporter": "workspace:*"
 	}
 }

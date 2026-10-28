@@ -23,6 +23,10 @@ await animator.animate(title, { opacity: [0, 1], y: [20, 0] }).finished;
 
 No other package imports anime.js; `pnpm check` rejects it ([ADR 003](../../docs/adr/003-animejs-over-gsap.md)).
 
+Exported decks get the animator as a classic script, `dist/browser/animator-anime.iife.js`, that carries anime.js, starts with its license notice and registers itself with `AddonDeck.register` ([ADR 002](../../docs/adr/002-classic-script-runtime.md)). The exporter includes it unless the deck's motion is `minimal`.
+
+The build also writes `dist/manifest.json`, which tells the exporter which file holds each adapter ([exported page](../../docs/format/exported-page.md)).
+
 > Status: the animator is ready; physics, charts and highlighting adapters come later. The package is private until its first release.
 
 How this package fits with the others: [contributor map](../../docs/README.md).

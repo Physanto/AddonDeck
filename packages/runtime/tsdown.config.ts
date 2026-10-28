@@ -2,6 +2,7 @@
 // Copyright 2026 The AddonDeck Authors
 
 import { defineConfig } from "tsdown";
+import { artifactManifest } from "../../tooling/build/artifact-manifest-plugin.ts";
 
 export default defineConfig([
 	{
@@ -10,6 +11,16 @@ export default defineConfig([
 		target: "es2022",
 		fixedExtension: false,
 		copy: [{ from: "src/runtime.css", to: "dist" }],
+		plugins: [
+			artifactManifest(new URL("./package.json", import.meta.url), [
+				{
+					kind: "runtime",
+					name: "runtime",
+					script: "browser.iife.js",
+					styles: "runtime.css",
+				},
+			]),
+		],
 	},
 	{
 		// Classic script: exported decks load the runtime from file://, where

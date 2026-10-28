@@ -18,6 +18,8 @@ Exported decks open with a double click, from `file://`, where browsers refuse m
 <script>AddonDeck.start();</script>
 ```
 
+The build also writes `dist/manifest.json`, which tells the exporter where the script and the styles are.
+
 - `AddonDeck.register(plugin)` adds a block (`{ kind: "block", definition, view }`) or an adapter (`{ kind: "adapter", adapter, create }`). A malformed plugin, or a second one with the same type, keyword or adapter kind, throws.
 - `AddonDeck.start()` reads the deck text and the assets, and shows the deck in `#addondeck`. Calling it again returns the deck already shown.
 

@@ -305,6 +305,9 @@ importers:
       '@addondeck/core':
         specifier: workspace:*
         version: link:../packages/core
+      '@addondeck/exporter':
+        specifier: workspace:*
+        version: link:../packages/exporter
 
 packages:
 
