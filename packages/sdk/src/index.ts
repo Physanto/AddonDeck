@@ -13,6 +13,7 @@ export type {
 	DiagnosticParams,
 	DiagnosticSeverity,
 	ExtractStepAnnotationsOptions,
+	Fence,
 	ParseResult,
 	SourceLine,
 	SourceLocation,
@@ -20,7 +21,12 @@ export type {
 	StepAnnotationResult,
 	StepDef,
 } from "@addondeck/core";
-export { extractStepAnnotations, normalizeKeyword } from "@addondeck/core";
+export {
+	closesFence,
+	extractStepAnnotations,
+	normalizeKeyword,
+	readFence,
+} from "@addondeck/core";
 export type {
 	Chart,
 	ChartData,
@@ -54,6 +60,11 @@ export type { Animator } from "./animation/animator";
 export { createInstantAnimator } from "./animation/create-instant-animator";
 export { EASINGS, type Easing } from "./animation/easing";
 export type { MotionPath } from "./animation/motion-path";
+export {
+	playReveal,
+	REVEAL_RISE,
+	setRevealed,
+} from "./animation/reveal";
 export { type StaggerFrom, stagger } from "./animation/stagger";
 export { getStrokeDraw, setStrokeDraw } from "./animation/stroke-draw";
 export type { Timeline } from "./animation/timeline";
@@ -62,6 +73,30 @@ export type { BlockContext } from "./block/block-context";
 export type { BlockInstance } from "./block/block-instance";
 export type { BlockView } from "./block/block-view";
 export type { Box } from "./block/box";
+export {
+	type BlockMessage,
+	type BlockMessages,
+	createBlockDiagnostic,
+} from "./block/create-block-diagnostic";
+export type {
+	AnnotatedLine,
+	InlineNode,
+	MarkdownBlock,
+	MarkdownDocument,
+	MarkdownLine,
+	MarkdownListItem,
+} from "./markdown/markdown-node";
+export { parseInline } from "./markdown/parse-inline";
+export {
+	type ParseMarkdownResult,
+	parseMarkdown,
+} from "./markdown/parse-markdown";
+export {
+	type RenderedMarkdown,
+	renderInline,
+	renderMarkdown,
+} from "./markdown/render-markdown";
+export { safeHref } from "./markdown/safe-href";
 export type {
 	AdapterEnvironment,
 	AdapterPlugin,
