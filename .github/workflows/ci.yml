@@ -37,3 +37,36 @@ jobs:
 
       - name: Build
         run: pnpm build
+
+  e2e:
+    name: Exported decks in Chromium, Firefox and WebKit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # The tests export the examples with the built command line.
+      - name: Build
+        run: pnpm build
+
+      - name: Browsers
+        run: pnpm exec playwright install --with-deps chromium firefox webkit
+
+      - name: Double-click tests
+        run: pnpm test:e2e
+
+      - name: Keep the traces of a failure
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: e2e-traces
+          path: e2e/test-results/
+          retention-days: 7
