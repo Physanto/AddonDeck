@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright 2026 The AddonDeck Authors
 
-import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, realpathSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join, sep } from "node:path";
+import { basename, dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import {
 	ARTIFACT_PACKAGES,
@@ -62,8 +63,15 @@ describe("createNodeArtifactSource", () => {
 
 describe("locateInstalledArtifacts", () => {
 	it("finds the build folder of an installed package of artifacts", () => {
-		expect(locateInstalledArtifacts("@addondeck/runtime")).toMatch(
-			new RegExp(`packages\\${sep}runtime\\${sep}dist$`),
+		// The folder may be reached through the workspace link and may not be
+		// built yet, so only the package it belongs to is compared.
+		const folder = locateInstalledArtifacts("@addondeck/runtime");
+		expect(folder).not.toBeNull();
+		expect(basename(folder ?? "")).toBe("dist");
+		expect(realpathSync(dirname(folder ?? ""))).toBe(
+			realpathSync(
+				fileURLToPath(new URL("../../../../packages/runtime", import.meta.url)),
+			),
 		);
 	});
 
