@@ -8,6 +8,8 @@ Built-in AddonDeck blocks.
 | `list`  | Items that appear one per step, or all at once with `reveal=all`          | [docs](src/list/docs.md)  |
 | `image` | An image that fills its space, with alt text and `fit`                    | [docs](src/image/docs.md) |
 
+Outside the browser, `BLOCK_DEFINITIONS` holds the definitions of every built-in block, to parse decks with: `createBlockRegistry(BLOCK_DEFINITIONS)`. Importing it loads no view and touches no DOM; the command line uses it.
+
 ## Anatomy of a block
 
 Every block lives in its own folder under `src/` and only talks to the SDK. Blocks never import each other or third-party libraries directly.

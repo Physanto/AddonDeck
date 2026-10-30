@@ -15,7 +15,8 @@
 			"@addondeck/source": "./src/animator-anime/index.ts",
 			"types": "./dist/animator-anime/index.d.ts",
 			"default": "./dist/animator-anime/index.js"
-		}
+		},
+		"./manifest.json": "./dist/manifest.json"
 	},
 	"files": [
 		"dist"

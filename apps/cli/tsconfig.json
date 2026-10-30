@@ -1,6 +1,9 @@
 {
 	"extends": "../../tsconfig.base.json",
 	"compilerOptions": {
+		// The block definitions are pure, but the sdk they import from also
+		// declares the views' contracts, which name DOM types.
+		"lib": ["ES2022", "DOM"],
 		"types": ["node"]
 	},
 	"include": ["src"]

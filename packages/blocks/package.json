@@ -25,7 +25,8 @@
 			"@addondeck/source": "./src/*/styles.css",
 			"default": "./dist/*/styles.css"
 		},
-		"./browser/*": "./dist/browser/*.iife.js"
+		"./browser/*": "./dist/browser/*.iife.js",
+		"./manifest.json": "./dist/manifest.json"
 	},
 	"files": [
 		"dist"
@@ -33,7 +34,7 @@
 	"scripts": {
 		"build": "tsdown",
 		"dev": "tsdown --watch",
-		"typecheck": "tsc"
+		"typecheck": "tsc && tsc -p test"
 	},
 	"dependencies": {
 		"@addondeck/core": "workspace:*",

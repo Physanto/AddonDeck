@@ -17,6 +17,8 @@ export interface PageInfo {
 	readonly version: string;
 	/** Attributions the assets' licenses ask for. */
 	readonly credits: readonly string[];
+	/** `false` when the page hides the watermark whatever the deck says. */
+	readonly watermark: boolean;
 }
 
 function meta(name: string, content: string): string {
@@ -49,7 +51,9 @@ export function emitHtml(info: PageInfo, parts: InlinedParts): string {
 					`<script type="application/json" id="addondeck-assets">${parts.assets}</script>`,
 				]),
 		...parts.scripts.map((code) => `<script>\n${code}\n</script>`),
-		"<script>AddonDeck.start();</script>",
+		info.watermark
+			? "<script>AddonDeck.start();</script>"
+			: "<script>AddonDeck.start({ watermark: false });</script>",
 	];
 	return [
 		"<!doctype html>",

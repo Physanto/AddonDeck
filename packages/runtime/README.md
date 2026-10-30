@@ -21,7 +21,7 @@ Exported decks open with a double click, from `file://`, where browsers refuse m
 The build also writes `dist/manifest.json`, which tells the exporter where the script and the styles are.
 
 - `AddonDeck.register(plugin)` adds a block (`{ kind: "block", definition, view }`) or an adapter (`{ kind: "adapter", adapter, create }`). A malformed plugin, or a second one with the same type, keyword or adapter kind, throws.
-- `AddonDeck.start()` reads the deck text and the assets, and shows the deck in `#addondeck`. Calling it again returns the deck already shown.
+- `AddonDeck.start()` reads the deck text and the assets, and shows the deck in `#addondeck`. Calling it again returns the deck already shown. A page exported without the watermark calls `AddonDeck.start({ watermark: false })`.
 
 The deck text is escaped so it cannot close its element, and the runtime reads it back with `unescapeEmbeddedSource` of `@addondeck/core`. The assets element is optional. It holds each file once, under `files`, and each reference written in the deck under `assets`, pointing at its file: `{ "files": { "sha256-…": "data:…" }, "assets": { "image:logo.png": { "kind": "image", "file": "sha256-…", "credit": "…" } } }`. An entry may carry its own `url` instead of `file`. The whole page is described in [the exported page](../../docs/format/exported-page.md).
 
@@ -82,7 +82,7 @@ A slide's `transition` (`none`, `fade`, `slide` or `zoom`; `fade` by default) pl
 
 Problems found in the deck text are shown in a card on the slide they belong to (header problems on the first slide). `createRuntime` shows warnings and errors, for previews; an exported page (`AddonDeck.start()`) shows the card only for errors, since the audience sees it. The `problems` option (`"all"` or `"errors"`) chooses. The card can be folded, and clicking its title does not move forward.
 
-Unless the header says `watermark: off`, a small "Made with AddonDeck" badge, worded from the text catalog, sits in the bottom right corner, inside the slide padding where blocks never draw.
+Unless the header says `watermark: off`, or the page or the host turns it off with the `watermark` option, a small "Made with AddonDeck" badge, worded from the text catalog, sits in the bottom right corner, inside the slide padding where blocks never draw.
 
 ## As a library
 

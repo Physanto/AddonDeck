@@ -21,6 +21,7 @@ else
 
 - `options.registry` holds the block definitions the deck is parsed with. Their `needs` decide the adapters included and their `assets(model)` the assets embedded.
 - `options.force` exports even with errors; without the runtime nothing can be exported.
+- `options.watermark: false` hides the watermark whatever the deck's `watermark:` says. The deck text is embedded unchanged; the page starts the runtime with `{ watermark: false }`.
 - `io.artifacts` (`ArtifactSource`) reads the compiled files of each package of artifacts (`@addondeck/runtime`, `@addondeck/blocks`, `@addondeck/adapters`…). Each package has a `manifest.json` that lists its pieces; when two packages offer the same piece, the first one listed wins.
 - `io.assets` (`AssetResolver`) returns the bytes of each asset reference, such as `image:team.jpg`, or `null`.
 
@@ -32,7 +33,7 @@ Each stage lives in its own file under `src/pipeline/`:
 
 | Stage   | What it does                                                                                                                                                        |
 | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| parse   | Parses the text with the registry. Errors stop the export here, unless forced.                                                                                      |
+| parse   | Parses the text with the registry and compiles each slide's step plan, as the runtime does. Errors stop the export here, unless forced.                             |
 | analyze | Lists the blocks drawn (`text` when there is text), the adapters (the animator unless the motion is `minimal`, plus the blocks' `needs`), the theme and the assets. |
 | collect | Reads the manifests, scripts and styles of those pieces, and resolves the assets, keeping each distinct file once by its SHA-256 hash (Web Crypto).                 |
 | inline  | Escapes every part so that none can close its element, and puts them in page order.                                                                                 |

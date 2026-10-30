@@ -279,6 +279,38 @@ describe("exportDeck", () => {
 		expect(problems(missing)[0]?.message).toBe("Falta image:a.png.");
 	});
 
+	it("reports the problems of the step plans after those of the parser", async () => {
+		const result = await exportDeck(
+			"format: 1\nmotion: wobbly\n\nordered 2 1:",
+			{ registry: createTestRegistry() },
+			createTestIO(),
+		);
+		expect(result.diagnostics.map((d) => d.code)).toEqual([
+			"W303",
+			"W315",
+			"EXPORT-E03",
+		]);
+	});
+
+	it("asks the runtime to hide the watermark, keeping the deck text", async () => {
+		const source = "# Hi";
+		const { html } = await exportDeck(
+			source,
+			{ registry: createTestRegistry(), watermark: false },
+			createTestIO(),
+		).then((result) => {
+			if (!result.ok) throw new Error("did not export");
+			return result;
+		});
+		const page = readPage(html);
+		expect(scripts(page).at(-1)).toBe("AddonDeck.start({ watermark: false });");
+		expect(
+			unescapeEmbeddedSource(
+				page.getElementById("addondeck-source")?.textContent ?? "",
+			),
+		).toBe(source);
+	});
+
 	it("stops at errors in the deck, without reading any artifact", async () => {
 		const io = createTestIO();
 		const result = await exportDeck(

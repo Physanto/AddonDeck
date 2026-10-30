@@ -36,6 +36,7 @@ Direct development dependencies of the repository. Their own dependencies are no
 | [fast-check](https://github.com/dubzzz/fast-check)                         | 4.10.2  | Property-based tests (`@addondeck/core`, `@addondeck/exporter`)                                      | MIT               | [fast-check.txt](licenses/fast-check.txt)                                                      |
 | [happy-dom](https://github.com/capricorn86/happy-dom)                      | 20.14.6 | DOM for tests (`@addondeck/sdk`, `@addondeck/adapters`, `@addondeck/runtime`, `@addondeck/exporter`) | MIT               | [happy-dom.txt](licenses/happy-dom.txt)                                                        |
 | [Vite](https://github.com/vitejs/vite)                                     | 8.3.5   | Development page of `@addondeck/runtime`                                                             | MIT               | [vite.txt](licenses/vite.txt)                                                                  |
+| [Playwright](https://github.com/microsoft/playwright) (`@playwright/test`) | 1.64.1  | End-to-end tests of exported decks in Chromium, Firefox and WebKit                                   | Apache-2.0        | [playwright.txt](licenses/playwright.txt)                                                      |
 
 ## Adding a component
 

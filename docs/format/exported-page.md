@@ -32,6 +32,7 @@ An exported deck is one HTML file that opens with a double click, from `file://`
 - `generator` names the version of the runtime the page embeds.
 - `author` is present when the header has `author:`, and `addondeck-credits` when an embedded asset carries an attribution, with each one separated by `; `.
 - Every script is a classic script (ADR 002). Blocks and adapters register themselves with `AddonDeck.register` as they run; `AddonDeck.start()` then reads the deck text and the assets and shows the deck.
+- A page exported without the watermark ends with `AddonDeck.start({ watermark: false })` instead, which hides it whatever the deck's `watermark:` says. The deck text stays as written.
 - The page holds only what the deck uses: the `text` block when the deck has text, the other blocks it draws, the animator unless its `motion:` is `minimal`, the adapters its blocks declare in `needs`, and the assets its blocks name with `assets`. A deck without assets has no `#addondeck-assets` element.
 
 ## The deck text
@@ -82,7 +83,7 @@ Inlined code is changed only where it could end its element, and always in a way
 
 ## The artifact manifest
 
-The exporter learns which compiled file holds each piece from a `manifest.json` at the root of each package of artifacts. The builds of `@addondeck/runtime`, `@addondeck/blocks` and `@addondeck/adapters` write it to their `dist/`:
+The exporter learns which compiled file holds each piece from a `manifest.json` at the root of each package of artifacts. The builds of `@addondeck/runtime`, `@addondeck/blocks` and `@addondeck/adapters` write it to their `dist/`, and each package exports it as `<package>/manifest.json`, so a tool finds the folder of the artifacts by resolving that path:
 
 ```json
 {
@@ -101,5 +102,5 @@ The exporter learns which compiled file holds each piece from a `manifest.json` 
 ```
 
 - `kind` is `runtime`, `block`, `adapter` or `theme`. `name` is the block type, the adapter kind, the theme name, or `runtime`.
-- `script` and `styles` are paths relative to the package. A piece has at least one of them, and a block or an adapter needs its `script`.
+- `script` and `styles` are paths relative to the folder of the manifest. A piece has at least one of them, and a block or an adapter needs its `script`.
 - When two packages offer the same piece, the exporter takes it from the first package it was given.

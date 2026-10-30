@@ -5,6 +5,9 @@
 	"description": "Command line interface for AddonDeck.",
 	"license": "Apache-2.0",
 	"type": "module",
+	"bin": {
+		"addondeck": "./dist/cli.js"
+	},
 	"exports": {
 		".": {
 			"@addondeck/source": "./src/index.ts",
@@ -18,10 +21,13 @@
 	"scripts": {
 		"build": "tsdown",
 		"dev": "tsdown --watch",
-		"typecheck": "tsc"
+		"typecheck": "tsc && tsc -p test"
 	},
 	"dependencies": {
+		"@addondeck/adapters": "workspace:*",
+		"@addondeck/blocks": "workspace:*",
 		"@addondeck/core": "workspace:*",
-		"@addondeck/exporter": "workspace:*"
+		"@addondeck/exporter": "workspace:*",
+		"@addondeck/runtime": "workspace:*"
 	}
 }

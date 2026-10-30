@@ -31,7 +31,8 @@ function block(
 /**
  * Blocks shaped like the built-in ones: `image` names its first argument as
  * an asset, `chart` needs the charts adapter, `quote` has no artifacts,
- * `broken` fails to list its assets and `strange` lists something else.
+ * `broken` fails to list its assets, `strange` lists something else and
+ * `ordered` has a step per argument, played at the click it names.
  */
 export function createTestRegistry(): BlockRegistry {
 	return createBlockRegistry([
@@ -48,6 +49,14 @@ export function createTestRegistry(): BlockRegistry {
 			},
 		}),
 		block("strange", { assets: () => [3] as unknown as string[] }),
+		block("ordered", {
+			steps: (args) =>
+				args.map((at) => ({
+					at: Number(at),
+					triggers: [],
+					location: { line: 1, column: 1 },
+				})),
+		}),
 	]);
 }
 

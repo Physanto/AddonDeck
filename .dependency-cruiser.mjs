@@ -15,7 +15,7 @@ const ALLOWED_IMPORTS = {
 	"packages/assets": ["packages/core"],
 	"packages/exporter": ["packages/core", "packages/assets"],
 	"apps/studio": ["packages/core", "packages/exporter", "packages/runtime"],
-	"apps/cli": ["packages/core", "packages/exporter"],
+	"apps/cli": ["packages/core", "packages/exporter", "packages/blocks"],
 };
 
 const WORKSPACE_MODULE = "^(packages|apps)/[^/]+/";

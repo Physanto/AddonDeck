@@ -15,7 +15,8 @@
 		"./runtime.css": {
 			"@addondeck/source": "./src/runtime.css",
 			"default": "./dist/runtime.css"
-		}
+		},
+		"./manifest.json": "./dist/manifest.json"
 	},
 	"files": [
 		"dist"

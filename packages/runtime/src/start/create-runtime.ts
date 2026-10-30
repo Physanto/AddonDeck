@@ -65,6 +65,11 @@ export interface RuntimeOptions {
 	readonly report?: IssueReporter;
 	/** Which problems of the deck text are shown on their slides; `all` by default. */
 	readonly problems?: ProblemDisplay;
+	/**
+	 * Shows or hides the watermark whatever the deck's `watermark:` says, as
+	 * an export without the watermark asks; by default the deck decides.
+	 */
+	readonly watermark?: boolean;
 }
 
 /** A deck being shown. */
@@ -138,7 +143,7 @@ function slideProblems(
  *
  * The deck gets its theme and motion personality, each click plays on its
  * blocks, the problems of the deck text show on their slides and, unless the
- * deck turns it off, the watermark sits in a corner.
+ * deck or `options.watermark` turns it off, the watermark sits in a corner.
  *
  * @example
  * ```ts
@@ -208,7 +213,7 @@ export function createRuntime(options: RuntimeOptions): Runtime {
 		translate,
 		report,
 	});
-	if (deck.meta.watermark) {
+	if (options.watermark ?? deck.meta.watermark) {
 		mountWatermark(stage.element, translate("watermark"));
 	}
 

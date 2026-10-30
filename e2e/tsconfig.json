@@ -1,0 +1,11 @@
+{
+	"extends": "../tsconfig.base.json",
+	"compilerOptions": {
+		"lib": ["ES2022", "DOM"],
+		"types": ["node"],
+		// Tests are not published, so they need no declarations.
+		"isolatedDeclarations": false,
+		"declaration": false
+	},
+	"include": ["**/*.ts"]
+}
