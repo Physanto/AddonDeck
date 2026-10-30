@@ -46,9 +46,12 @@ pnpm test:coverage   # unit tests with the coverage report CI uses
 pnpm check           # lint, formatting, types and dependency rules
 pnpm format          # fix formatting and safe lint issues
 pnpm build           # build every package
+pnpm test:e2e        # export the examples and open them in three browsers (after pnpm build)
 pnpm dev             # rebuild packages on every change
 pnpm --filter @addondeck/runtime dev:page   # show the example decks in the browser
 ```
+
+The end-to-end tests need the browsers once: `pnpm exec playwright install chromium firefox webkit` (on Linux, add `--with-deps` to install their system libraries).
 
 Packages import each other straight from their sources, so tests and type checks don't need a build first.
 
@@ -93,11 +96,13 @@ Tests use [Vitest](https://vitest.dev/) and live next to the code they test, as 
 | Pure logic (parser, exporter, algorithms, utilities)                | Unit                                                                                                                                                                                                                     |
 | A block or a verb                                                   | The SDK contract suite, unit tests for its `parse`, and at least one example deck                                                                                                                                        |
 | Several pieces working together (exporter + CLI, Studio + exporter) | Integration                                                                                                                                                                                                              |
-| The runtime, navigation, or anything visible while presenting       | End-to-end, including the double-click test _(planned)_                                                                                                                                                                  |
+| The runtime, navigation, or anything visible while presenting       | End-to-end, including the double-click test (`e2e/`)                                                                                                                                                                     |
 | Themes or styles                                                    | Visual snapshots _(planned)_                                                                                                                                                                                             |
 | A bug                                                               | A test that fails without your fix and passes with it                                                                                                                                                                    |
 | The parser                                                          | The new case and, for a new diagnostic, its code in the [format specification](docs/format/v1.md#diagnostics), its message in the text catalog and a fixture deck named after the code in `packages/core/test/fixtures/` |
 | Documentation only                                                  | None                                                                                                                                                                                                                     |
+
+**The double-click test** (`e2e/double-click.spec.ts`, with [Playwright](https://playwright.dev/)) exports every deck of `examples/` with the built `addondeck build`, opens each page from `file://` in Chromium, Firefox and WebKit, and checks that it starts without console errors and goes from the first slide to the last and back with the arrow keys. A new example deck is tested by adding it to `examples/`. CI runs it on every pull request.
 
 **Coverage:** `core`, `sdk`, `runtime` and `exporter` must each keep at least 90% of lines covered, and CI enforces it (`pnpm test:coverage`), because everything else depends on them. Other packages have no minimum: we prefer a few tests that check real behavior over many that only raise the percentage.
 
